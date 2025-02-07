@@ -1,0 +1,1481 @@
+/* COMUM */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0);
+}
+::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  border-radius: 10px;
+}
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #282828;
+}
+
+/* ----------------- HEADER ------------------
+
+header {
+  position: fixed;
+  top: 30px;
+  left: 5%;
+  width: 90%;
+  height: 40px;
+  z-index: 2;
+}
+
+header h1 {
+  position: absolute;
+  margin-top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 20px;
+}*/
+
+.header_options {
+  position: absolute;
+  float: right;
+  right: 12px;
+  top: 0;
+  height: 100%;
+  width: 200px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+
+
+.header_options li {
+  list-style-type: none;
+  position: relative;
+  width: fit-content;
+  height: 30px;
+  /* background-color: #006a5c; */
+  top: 5px;
+  cursor: pointer;
+  /* background-color: aqua; */
+  text-align: center;
+  /* padding-top: 4px; */
+}
+
+.header_options li p {
+  margin-top: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.header_options a{
+	text-decoration: none !important;
+	color: white;
+}
+
+/*.header_options li p {
+  margin-top: 6px;
+  font-size: 14px;
+}*/
+
+/* ----------------- PAGINA GERAL ------------------- */
+
+.zona_nome {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.zona_nome h2 {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.zona_nome span {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.zona_img_fundo {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 90%;
+  height: 60%;
+  /* background-color: pink; */
+  /* z-index: 3; */
+  /* overflow: hidden; */
+}
+
+.zona_img_fundo img {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+  width: 80%;
+  max-width: 800px;
+  opacity: 0.8;
+}
+
+.content_superior {
+  position: absolute;
+  top: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  max-width: 600px;
+  /* background-color: rgb(189, 88, 105); */
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.top_nome_jogadas,
+.top_erros {
+  position: relative;
+  height: 100%;
+  /* background-color: rgb(215, 215, 14); */
+  box-shadow: -2px -2px 5px 2px rgba(222, 222, 222, 0.005);
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+}
+
+.top_nome_jogadas {
+  width: 40%;
+}
+
+.top_erros {
+  display: initial;
+  width: 58%;
+  background-image: linear-gradient(
+    to right bottom,
+    #e93600bf,
+    #ea5403c6,
+    #ea7c07bb,
+    #eb920cc1,
+    #ebb112bf
+  );
+}
+
+.aviso_erro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: rgb(242, 233, 233);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.top_id_jogo,
+.top_numero_jogadas {
+  position: absolute;
+  top: 0;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
+  color: rgb(242, 233, 233);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.top_id_jogo {
+  left: 5%;
+  width: 20%;
+  /* background-color: red; */
+  font-size: 20px !important;
+  color: rgb(172, 172, 172);
+}
+
+.top_numero_jogadas {
+  float: right;
+  right: -2%;
+  width: 70%;
+  /* background-color: rgb(255, 0, 183); */
+}
+
+.top_data_inicio {
+  position: absolute;
+  bottom: 3px;
+  height: 20px;
+  line-height: 20px;
+  text-align: left;
+  color: rgb(242, 233, 233);
+  font-size: 12px;
+  font-weight: 500;
+  left: 5%;
+  width: 90%;
+  /* background-color: rgb(0, 255, 157); */
+}
+
+.content_total {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1450px;
+  /* background-color: rgb(189, 88, 105); */
+  height: 600px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.bloco_pecas,
+.bloco_jogo,
+.bloco_pessoal {
+  position: relative;
+  height: 100%;
+  /* background-color: rgb(215, 215, 14); */
+  box-shadow: -2px -2px 5px 2px rgba(222, 222, 222, 0.005);
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+}
+
+.bloco_pecas {
+  /* margin-top: -13px; */
+  height: 48% !important;
+  /* display: none; */
+  padding-top: 3px;
+}
+
+.bloco_pecas:first-child {
+  margin-bottom: 6%;
+}
+
+.bloco_lateral_esquerdo {
+  position: relative;
+  height: 100%;
+  /* background-color: rgb(215, 215, 14); */
+  /* box-shadow: -2px -2px 5px 2px rgba(222, 222, 222, 0.005); */
+  /* border-radius: 8px; */
+  text-align: center;
+  justify-content: center;
+  width: 290px;
+}
+
+.bloco_pecas {
+  width: 290px;
+}
+
+.bloco_jogo {
+  width: 600px;
+}
+
+.bloco_pessoal {
+  width: 290px;
+}
+
+.back_blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: rgba(157, 157, 157, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 8px rgba(18, 18, 18, 0.694);
+}
+
+/* ------------------ TABULEIRO JOGO ------------------ */
+
+.chess-board {
+  border-spacing: 0;
+  border-collapse: separate;
+  position: absolute;
+  top: calc(5% - 20px);
+  left: calc(5% - 20px);
+  width: 92%;
+  height: 92%;
+  font-size: 12px;
+  /* background-color: #00665d; */
+}
+
+/* define o tamanho dos identificadores de coluna e linha */
+/* o resto do jogo fica bem se os valores forem iguais*/
+.chess-board tr:first-child {
+  height: 20px;
+  /* background-color: lightcoral; */
+  color: white;
+}
+
+.numero_linha {
+  width: 20px;
+  color: white;
+}
+/* ----------- */
+
+.chess-board th + th {
+  /* border-bottom: 1px solid #000; */
+}
+
+.borda_baixo_dir {
+  border-bottom-right-radius: 8px;
+  /* background-color: red !important; */
+}
+
+.borda_baixo_esq {
+  border-bottom-left-radius: 8px;
+  /* background-color: red !important; */
+}
+
+.borda_cima_dir {
+  border-top-right-radius: 8px;
+  /* background-color: red !important; */
+}
+
+.borda_cima_esq {
+  border-top-left-radius: 8px;
+  /* background-color: red !important; */
+}
+
+.chess-board tr:last-child td {
+  /* border-bottom: 1px solid #000; */
+  /* background-color: green !important; */
+}
+
+.chess-board th:empty {
+  border: none;
+}
+.chess-board td {
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  font-size: 32px;
+  line-height: 0;
+  cursor: default;
+}
+.chess-board .light {
+  background: #faf9f6;
+}
+.chess-board .dark {
+  background: #538779;
+}
+
+.chess-board .selected {
+	border: 6px solid #2bdfa9;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.possible_comer{
+	background-color:#e6323273;
+	border: 6px solid #d41c3b;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+/* ---------- ADVERSARIO/PESSOAL ---------- */
+
+.id_nome {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.id_area_pessoal {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+/* ------------------------------------------------------------- */
+
+.tempo_jogada,
+.descricao_dados_jogo,
+.descricao_dados_principais_jogo,
+.descricao_dados_vencedor {
+  position: relative;
+  display: block;
+  width: 90%;
+  height: 15px;
+  left: 5%;
+  /* background-color: firebrick; */
+  text-align: left;
+  color: rgb(167, 167, 167);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.descricao_dados_vencedor {
+  font-weight: 500;
+  text-align: center;
+  width: 70%;
+  left: 15%;
+  font-size: 11px;
+  margin-top: 10px;
+  color: rgb(126, 126, 126);
+  margin-bottom: 40px;
+}
+
+.descricao_dados_principais_jogo {
+  color: rgb(78, 190, 147);
+  margin-top: 2px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.descricao_dados_jogo {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.caixa_cor_pecas_vencedor {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 15px;
+  border-radius: 5px;
+}
+
+.caixa_cor_pecas_vencedor.branco {
+  background-color: white;
+}
+
+.caixa_cor_pecas_vencedor.preto {
+  background-color: black;
+}
+
+.zona_pop_up_promocao {
+  position: absolute;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.back_promocao {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.pop_up_promocao {
+  position: absolute;
+  width: 50%;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(29, 29, 29, 0.783);
+  border-radius: 8px;
+}
+
+.pecas_promocao_linha {
+  position: relative;
+  display: flex;
+  width: 90%;
+  left: 5%;
+  height: 97px;
+  /* background-color: #00665d; */
+  margin-top: 5%;
+  justify-content: space-between;
+}
+
+.peca_promocao {
+  position: relative;
+  width: 48%;
+  height: 100%;
+  background-color: rgba(29, 29, 29, 0.7);
+  font-size: 65px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.peca_promocao.branca {
+  color: white;
+}
+
+.peca_promocao.preta {
+  color: rgb(12, 12, 12);
+}
+
+.peca_promocao:hover {
+  transform: scale(0.95);
+}
+
+.codigo_peca,
+.nome_peca {
+  position: relative;
+  display: block;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.codigo_peca {
+  margin-bottom: 0px;
+  /* background-color: #00615d; */
+  /* height: 40px; */
+}
+
+.nome_peca {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: -5px;
+  /* background-color: palevioletred; */
+}
+
+/* ----------------- */
+
+.id_jogada {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.id_rever {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.id_rever_in_game {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-top: 18px;
+}
+
+.id_decidir_empate {
+  position: relative;
+  display: block;
+  color: white;
+  font-size: 14px;
+  margin-top: 20px;
+  font-size: 12px;
+  width: 80%;
+  left: 10%;
+  margin-bottom: 4px;
+}
+
+.zona_decidir_empate {
+  position: relative;
+  display: flex;
+  width: 40%;
+  left: 30%;
+  height: 30px;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+
+#formsAceitarEmpate, #formsRecusarEmpate {
+	color: #fff;
+  /* background-color: #3ce7a5; */
+  outline: none;
+  border: 0;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+  font-size: 20px;
+  width: 45%;
+	
+}
+
+.btn_aceitar_empate,
+.btn_recusar_empate {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  outline: none;
+  border: 0;
+  padding: 2px 0px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  font-size: 20px;
+  width: 100%;
+  top: 0;
+  height: 100%;
+}
+
+.btn_aceitar_empate {
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  color: rgb(181, 255, 217);
+}
+
+.btn_recusar_empate {
+  background-image: linear-gradient(
+    to right bottom,
+    #aa3141,
+    #b63245,
+    #c3344a,
+    #cf354e,
+    #dc3653
+  );
+  color: rgb(255, 181, 181);
+}
+
+.zona_btn_rever {
+  position: relative;
+  display: flex;
+  height: 25px;
+  width: 60%;
+  left: 20%;
+  /* background-color: pink; */
+  justify-content: space-between;
+  color: white;
+}
+
+.seta_dir {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #171717;
+  line-height: 22px;
+  font-size: 20px;
+  border-radius: 5px;
+  /*box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.4);*/
+  top: 0;
+	left: 0;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+#formJogadaAnterior, #formJogadaSeguinte {
+  position: relative;
+  width: 48%;
+  height: 25px;
+  /*background-color: #171717;*/
+  /*line-height: 25px;*/
+  /*font-size: 25px;*/
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.4);
+}
+
+.seta_esq {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #171717;
+  line-height: 22px;
+  transform: rotate(180deg);
+  font-size: 20px;
+  border-radius: 5px;
+  /*box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.4);*/
+  top: 0;
+	left: 0;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.id_info_jogada {
+  position: relative;
+  display: block;
+  color: rgb(199, 199, 199);
+  font-size: 12px;
+  width: 80%;
+  left: 10%;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.id_info_rever {
+  position: relative;
+  display: block;
+  color: rgb(199, 199, 199);
+  font-size: 12px;
+  width: 80%;
+  left: 10%;
+  margin-top: 10px;
+  font-weight: 400;
+}
+
+.id_pecas {
+  position: relative;
+  display: block;
+  height: 25px;
+  width: 90%;
+  /* background-color: pink; */
+  left: 5%;
+  /* margin-bottom: 0px; */
+}
+
+.bloco_cor {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  /* background-color: black; */
+  border-radius: 3px;
+  /* border: 2px solid rgb(154, 154, 154); #035c5c */
+}
+
+.bloco_cor.branco {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255); /*#035c5c*/
+}
+.bloco_cor.preto {
+  background-color: black;
+  border: 2px solid rgb(0, 0, 0); /*#035c5c*/
+}
+
+.nome_cor {
+  position: absolute;
+  top: -55%;
+  left: 15%;
+  /* transform: translateY(-50%); */
+  height: 15px;
+  width: fit-content;
+  /* background-color: firebrick; */
+  font-size: 14px;
+  /* color: rgb(154, 154, 154); */
+}
+
+.nome_cor.branco {
+  color: white;
+}
+
+.nome_cor.preto {
+  color: rgb(154, 154, 154);
+}
+
+.bloco_pecas_capturadas {
+  position: relative;
+  display: block;
+  left: 5%;
+  width: 90%;
+  height: 130px;
+  border-radius: 8px;
+  background-color: rgba(136, 136, 136, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.694);
+  border: 1px solid rgba(38, 38, 38, 0.2);
+  margin-bottom: 8px;
+  margin-top: 10px;
+  text-align: left;
+  /* background-color: #00615d; */
+}
+
+.titulo_pecas_capturadas {
+  position: relative;
+  display: block;
+  font-size: 13px;
+  color: white;
+  margin-left: 5%;
+  margin-top: 7px;
+}
+
+.show_pecas_capturadas {
+  position: relative;
+  display: block;
+  width: 90%;
+  left: 5%;
+  height: 60%;
+  /* background-color: greenyellow; */
+  justify-content: center;
+  text-align: center;
+}
+
+.capturadas_cima,
+.capturadas_baixo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 45%;
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.capturadas_cima {
+  margin-bottom: 5%;
+}
+
+.capturadas_cima li,
+.capturadas_baixo li {
+  position: relative;
+  list-style-type: none;
+  width: 25%;
+  height: 100%;
+  /* background-color: aqua; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.capturadas_cima li h1,
+.capturadas_baixo li h1 {
+  position: relative;
+  /* top: 0px; */
+  /* left: 0px; */
+  /* width: 100%; */
+  /* height: fit-content; */
+  text-align: center;
+  /* vertical-align: text-top; */
+  font-size: 45px;
+  /* background-color: yellow; */
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.pretas {
+  color: black;
+}
+
+.brancas {
+  color: white;
+}
+
+.num_peca_comida {
+  position: absolute;
+  bottom: 0;
+  float: right;
+  right: 0;
+  height: 20px;
+  width: 15px;
+  /* background-color: pink; */
+  color: white;
+  font-size: 15px;
+}
+
+.bloco_input {
+  position: relative;
+  display: block;
+  left: 10%;
+  width: 80%;
+  height: 30px;
+  /* background-color: pink; */
+}
+
+.input_pesquisa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  /* width: calc(100% - 55px); */
+  /* padding-left: 55px; */
+  background-color: #171717;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.694);
+  color: white;
+  font-family: sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.input_pesquisa::-webkit-input-placeholder {
+  /* padding-left: 55px; */
+  font-size: 14px;
+}
+
+.input_pesquisa::-moz-placeholder {
+  font-size: 14px;
+}
+
+.btn {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 13px 0px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+  font-size: 10px;
+  width: 80%;
+}
+
+.btn.jogar {
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.btn_options_lado {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  height: 40px;
+  left: 10%;
+  /* background-color: #00665d; */
+  margin-top: 20px;
+}
+
+#formsPedirEmpate, #formsDesistir {
+	color: #fff;
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 13px 0px;
+  text-transform: uppercase;
+  /* margin-top: 20px; */
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+  font-size: 10px;
+  width: 48%;
+}
+
+.btn_lado_lado {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  outline: none;
+  border: 0;
+  padding: 13px 0px;
+  text-transform: uppercase;
+  /* margin-top: 20px; */
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  font-size: 10px;
+  width: 100%;
+  top: 0;
+}
+
+.btn_lado_lado.terminar {
+  background-image: linear-gradient(
+    to right bottom,
+    #aa3141,
+    #b63245,
+    #c3344a,
+    #cf354e,
+    #dc3653
+  );
+}
+
+.btn_lado_lado.empatar {
+  background-image: linear-gradient(
+    to right bottom,
+    #e99800,
+    #ea9f03,
+    #eaa507,
+    #ebac0c,
+    #ebb212
+  );
+}
+
+.btn_lado_lado.empatar.disable {
+  background-image: none !important;
+  background-color: rgb(94, 94, 94) !important;
+  color: rgb(177, 177, 177);
+}
+
+/* ------------  TIMER  ------------ */
+
+.zona_timer {
+  font-family: sans-serif;
+  position: relative;
+  width: 80%; /*700px*/
+  height: 55px; /*150px*/
+  left: 10%;
+  margin-top: 10px;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  /* background-color: purple; */
+}
+
+.timer_descricao {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 11px;
+  /* background-color: aquamarine; */
+  margin-top: 2px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.bloco_timer {
+  font-family: sans-serif;
+  position: relative;
+  width: 100%;
+  height: 40px; /*110px*/
+  /* background-color: rgb(182, 21, 21); */
+  display: flex;
+  justify-content: space-evenly;
+  color: rgb(230, 230, 230);
+}
+
+.timer_dia,
+.timer_hora,
+.timer_min,
+.timer_seg,
+.timer_desc {
+  position: relative;
+  width: 22%;
+  height: 100%;
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.timer_desc {
+  font-size: 10px;
+}
+
+.timer_sep {
+  position: relative;
+  width: 3%;
+  height: 100%;
+  /* background-color: rgb(140, 0, 255); */
+  line-height: 40px; /*110px*/ /*super impotante ser igual à height*/
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.timer_dia .timer_number,
+.timer_hora .timer_number {
+  background-color: rgb(23, 23, 23) !important;
+}
+
+.timer_number {
+  position: relative;
+  width: 46%;
+  height: 100%;
+  background-color: rgb(68, 121, 89);
+  text-align: center;
+  /* vertical-align: middle; */
+  /* align-items: center; */
+  /* display: table; */
+  /* text-align: center; */
+  line-height: 40px; /*110px*/ /*super impotante ser igual à height*/
+  font-size: 20px;
+  font-weight: 900;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px rgba(18, 18, 18, 0.3);
+}
+
+.fixar_rever {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20%;
+}
+
+.fixar_rever_in_game{
+	position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 38%;
+}
+
+.input_invisivel {
+	display: none;
+}
+
+/*---------- ALERTA FINAL DE JOGO ----------*/
+
+#painel_vitoria,
+#painel_derrota,
+#painel_empate {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  /* background-color: pink; */
+}
+
+canvas {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.bloco_resultado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 350px;
+  z-index: 20;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius:8px;
+}
+
+/* REPETIDO */
+.back_blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: rgba(157, 157, 157, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 8px rgba(18, 18, 18, 0.694);
+}
+
+/* --------------------- */
+
+.blur_game {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* border-radius: 8px; */
+  background: rgba(157, 157, 157, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+.btn_a {
+  color: #fff;
+  outline: none;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+  width: 48%;
+}
+
+.btn_ir_painel {
+  position: absolute;
+  padding: 13px 0px;
+  width: 100%;
+  top: 0;
+  left: 0px;
+  background-image: linear-gradient(
+    to right bottom,
+    #e99800,
+    #ea9f03,
+    #eaa507,
+    #ebac0c,
+    #ebb212
+  );
+  outline: none;
+  border: 0;
+  height: 100%;
+  border-radius: 5px;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
+}
+
+#btn_voltar_jogo,
+#btn_voltar_jogo_derrota,
+#btn_voltar_jogo_empate {
+  color: #fff;
+  outline: none;
+  border: 0;
+  padding: 13px 0px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+  font-size: 10px;
+  width: 48%;
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+}
+
+.bloco_resultado h1 {
+  position: relative;
+  display: block;
+  z-index: 30;
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+}
+
+.ganhar_cor {
+  color: rgb(17, 172, 113);
+  text-shadow: 1px 1px 8px rgba(47, 240, 30, 0.399);
+}
+
+.perder_cor {
+  color: rgb(172, 27, 17);
+  text-shadow: 1px 1px 8px rgba(240, 51, 30, 0.399);
+}
+
+.empatar_cor {
+  color: rgb(172, 123, 17);
+  text-shadow: 1px 1px 8px rgba(240, 180, 30, 0.399);
+}
+
+.bloco_resultado h3 {
+  position: relative;
+  display: block;
+  z-index: 30;
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  margin-top: 30px;
+  color: rgb(232, 232, 232);
+  width: 80%;
+  left: 10%;
+  /* text-shadow: 1px 1px 8px rgba(47, 240, 30, 0.399); */
+}
+
+#btn_fechar_pop_up,
+#btn_fechar_pop_up_derrota,
+#btn_fechar_pop_up_empate {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  text-align: center;
+  float: right;
+  right: 5%;
+  top: -3%;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+.btn_fechar_pop_up:hover {
+  transform: scale(0.9);
+}
+
+.bloco_resultado img {
+  position: relative;
+  display: block;
+  z-index: 30;
+  width: 20%;
+  height: auto;
+  left: 40%;
+}
+
+.zona_btn_vitoria {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  z-index: 30;
+  width: 70%;
+  left: 15%;
+  height: 40px;
+  /* background-color: aqua; */
+  margin-top: 25px;
+}
+
+#fechar_pop_up_background,
+#fechar_pop_up_background_derrota,
+#fechar_pop_up_background_empate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(102, 51, 153, 0.468); */
+  z-index: 20;
+}
+
+#fechar_pop_up_background_derrota,
+#fechar_pop_up_background_empate {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.possible{
+  	margin-left: 30%;
+	height: 40%;
+	width: 40%;
+	background: black;
+	z-index: 3;
+	border-radius: 50%;
+	opacity: 0.4;
+}
+
+#flipBoard {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  outline: none;
+  border: none;
+  color: #fff;
+  padding: 2px 0px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 115px;
+  left: 50%;
+  transform: translateX(126%);
+  font-size: 12px;
+  width: 291px;
+  height: 30px;
+  background-image: linear-gradient(
+    to right bottom,
+    #101011,
+    #131314,
+    #151617,
+    #181819,
+    #1a1b1c
+  );
+  box-shadow: 1px 1px 8px rgba(18, 18, 18, 0.7);
+}
+
+@media only screen and (max-width: 1610px) {
+  #flipBoard {
+    width: 200px;
+    left: auto;
+    transform: none;
+    float: right;
+    right: 8.5%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  #flipBoard {
+    transform: none;
+    left: auto;
+    float: right;
+    right: 5%;
+  }
+}
+
+.descricao_replay,
+.btn_voltar_jogada_atual,
+.numero_da_jogada {
+  position: relative;
+  display: block;
+  left: 5%;
+  width: 90%;
+}
+
+.descricao_replay {
+  font-size: 12px;
+  color: rgb(218, 218, 218);
+}
+
+.btn_voltar_jogada_atual {
+  margin-top: 10px;
+  text-decoration: none;
+  color: #0b9683 !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn_voltar_jogada_atual:hover {
+  color: #086e61 !important;
+}
+
+.numero_da_jogada {
+  margin-top: 30px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.numero_da_jogada span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.disabled_seta{
+	background-color: rgb(82, 82, 82) !important;
+	color: rgb(165, 165, 165) !important;
+	cursor: default !important;
+}

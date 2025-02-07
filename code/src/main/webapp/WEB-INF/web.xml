@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app id="WebApp_ID"
+version="2.5"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd%22%3E">
+<display-name>ChessBookWeb Application</display-name>
+<session-config>
+	<session-timeout>60</session-timeout>
+</session-config>
+<servlet>
+    <servlet-name>Registo</servlet-name>
+    <jsp-file>/registo.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>gameList</servlet-name>
+    <jsp-file>/gameList.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>game</servlet-name>
+    <jsp-file>/game.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>managedb</servlet-name>
+    <jsp-file>/manager.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>ajax</servlet-name>
+    <jsp-file>/ajax.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>erro</servlet-name>
+    <jsp-file>/error.jsp</jsp-file>
+  </servlet>
+  
+ <servlet-mapping>
+	 <servlet-name>Registo</servlet-name>
+	 <url-pattern>/Registo</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	 <servlet-name>gameList</servlet-name>
+	 <url-pattern>/GameList</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	 <servlet-name>game</servlet-name>
+	 <url-pattern>/Game</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	 <servlet-name>managedb</servlet-name>
+	 <url-pattern>/ManageDB</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	 <servlet-name>ajax</servlet-name>
+	 <url-pattern>/ajax</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+	 <servlet-name>erro</servlet-name>
+	 <url-pattern>/Erro</url-pattern>
+ </servlet-mapping>
+</web-app>

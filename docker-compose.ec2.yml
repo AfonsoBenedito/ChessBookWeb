@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: chess-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-rootpass}"
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./mysql-init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./mysql-init/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    networks:
+      - chess-net
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # Limit MySQL to 50% of 1 CPU
+          memory: "512M"  # Limit MySQL to 512MB RAM
+        reservations:
+          cpus: "0.25"  # Guarantee 25% of 1 CPU
+          memory: "256M"  # Minimum 256MB RAM reserved
+
+  app:
+    build: ./code
+    container_name: chess-app
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - chess-net
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: "${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+      # Limit Java heap memory usage
+      JAVA_OPTS: "-Xms256m -Xmx512m -XX:MaxMetaspaceSize=128m"
+
+      # (Optional) Reduce Tomcat thread pool to use fewer resources
+      CATALINA_OPTS: "-Dorg.apache.catalina.connector.maxThreads=50 -Dorg.apache.catalina.connector.acceptCount=20"
+
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # Limit Tomcat to 50% of 1 CPU
+          memory: "600M"  # Limit Tomcat to 600MB RAM
+        reservations:
+          cpus: "0.25"
+          memory: "300M"
+
+
+networks:
+  chess-net:
+    driver: bridge

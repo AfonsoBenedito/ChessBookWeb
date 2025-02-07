@@ -1,0 +1,16 @@
+{
+  "grupo" : 26,
+  "aluno1" : 54937,
+  "aluno2" : 54945,
+  "aluno3" : 54970,
+  "ramo-aluno1" : "AFONSO54937",
+  "ramo-aluno2" : "AFONSO54945",
+  "ramo-aluno3": "TOMAS54970",
+  "master@16/01" : "33b99de7",
+  "aluno1@16/01" : "33b99de7",
+  "aluno2@16/01" : "ffc04661",
+  "aluno3@16/01" : "4d363e7d",
+  "url" : "http://localhost:8080/ChessbookWEB-0.0.1-SNAPSHOT/Registo",
+  "master@final" : "33b99de7",
+  "obs":"O projeto foi entregue apos a data prevista uma vez que embora o projeto estivesse terminado a tempo, ponderamos que seria melhor melhorar o projeto com o objetiovo de obter uma melhor nota, assim como corrigir erros e bugs que foram sendo encontrados"
+}

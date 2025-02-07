@@ -1,0 +1,54 @@
+header {
+  position: fixed;
+  top: 30px;
+  left: 5%;
+  width: 90%;
+  height: 40px;
+  /* background-color: yellowgreen; */
+  z-index: 2;
+}
+
+header h1 {
+  position: absolute;
+  margin-top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 20px;
+}
+
+a{
+	text-decoration: none !important;
+	color: white !important;
+}
+
+.btn_jogos p, .btn_sair p{
+	text-decoration: none !important;
+	color: white !important;
+}
+
+/* COMUM */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0);
+}
+::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  border-radius: 10px;
+}
+
+* {
+  font-family: sans-serif;
+}
