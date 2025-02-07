@@ -1,0 +1,719 @@
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #282828;
+}
+
+.header_options {
+  position: absolute;
+  float: right;
+  right: 12px;
+  top: 0;
+  height: 100%;
+  width: 200px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+
+
+.header_options li {
+  list-style-type: none;
+  position: relative;
+  width: fit-content;
+  height: 30px;
+  /* background-color: #006a5c; */
+  top: 5px;
+  cursor: pointer;
+  /* background-color: aqua; */
+  text-align: center;
+  /* padding-top: 4px; */
+}
+
+.header_options li p {
+  margin-top: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.header_options a{
+	text-decoration: none !important;
+	color: white;
+}
+
+/* ----------------- PAGINA GERAL ------------------- */
+
+.zona_nome {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.zona_nome h2 {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.zona_nome span {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.zona_img_fundo {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 90%;
+  height: 60%;
+  /* background-color: pink; */
+  /* z-index: 3; */
+  /* overflow: hidden; */
+}
+
+.zona_img_fundo img {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: auto;
+  width: 80%;
+  max-width: 800px;
+  opacity: 0.8;
+}
+
+.content_total {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1450px;
+  /* background-color: rgb(189, 88, 105); */
+  height: 600px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.box {
+  position: relative;
+  width: 28%;
+  height: 100%;
+  /* background-color: yellow; */
+  border-radius: 8px;
+  /* overflow: hidden; */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.back_blur,
+.front_invisible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.back_blur {
+  background: rgba(157, 157, 157, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 8px rgba(18, 18, 18, 0.694);
+}
+
+.front_invisible {
+  /* background-color: rgba(0, 255, 255, 0.308); */
+  box-shadow: -2px -2px 5px 2px rgba(222, 222, 222, 0.05);
+  text-align: center;
+  color: white;
+}
+
+.front_invisible h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.scroll_blocos {
+  position: absolute;
+  top: 10%;
+  height: 85%;
+  width: 90%;
+  left: 5%;
+  /* background-color: red; */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 93%, transparent);
+}
+
+.sub_bloco_jogos,
+.sub_bloco_jogos_historico {
+  position: relative;
+  display: block;
+  left: 0%;
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
+  background-color: rgba(136, 136, 136, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.694);
+  border: 1px solid rgba(38, 38, 38, 0.2);
+  margin-bottom: 8px;
+}
+
+.sub_bloco_jogos_historico{
+	height:120px;
+}
+
+.sub_bloco_jogos:hover, 
+.sub_bloco_jogos_historico:hover {
+  transform: scale(1.01);
+}
+
+.first_line,
+.second_line,
+.third_line,
+.fourth_line {
+  position: relative;
+  display: block;
+  left: 5%;
+  width: 90%;
+  height: 20px;
+  /* background-color: pink; */
+  display: flex;
+}
+
+.first_line a,
+.second_line a,
+.third_line a,
+.fourth_line a{
+	text-decoration: none;
+}
+
+.second_line span {
+  color: rgb(233, 151, 63);
+}
+
+.first_line {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+}
+
+.third_line {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.third_line h4:nth-child(1) {
+  position: absolute;
+  left: 0 !important;
+}
+
+.second_line {
+  margin-top: 5px;
+  justify-content: flex-start;
+}
+
+.fourth_line {
+  margin-top: 5px;
+  justify-content: space-between;
+}
+
+.first_line h4,
+.second_line h4,
+.third_line h4,
+.fourth_line h4 {
+  position: relative;
+  font-size: 13px;
+  margin-top: 0;
+  cursor: default;
+}
+
+.vencer_jogo {
+  color: rgb(52, 187, 117) !important;
+}
+
+.empatar_jogo {
+  color: rgb(232, 209, 33) !important;
+}
+
+.perder_jogo {
+  color: rgb(223, 81, 56) !important;
+}
+
+.btn_voltar_jogar {
+  color: rgb(28, 167, 107);
+  font-weight: 1000;
+  cursor: pointer !important;
+}
+
+.btn_voltar_jogar:hover {
+  color: rgb(12, 125, 76);
+}
+
+.btn_voltar_reply {
+  color: rgb(206, 67, 76);
+  font-weight: 1000;
+  cursor: pointer !important;
+}
+
+.btn_voltar_reply:hover {
+  color: rgb(154, 34, 42);
+}
+
+.image_game {
+  position: absolute;
+  float: right;
+  right: 15px;
+  top: 40px;
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+}
+.sub_bloco_jogos:nth-child(6n) > .image_game {
+  background-image: url(../images/info_1.png);
+}
+.sub_bloco_jogos:nth-child(6n + 1) > .image_game {
+  background-image: url(../images/info_2.png);
+}
+.sub_bloco_jogos:nth-child(6n + 2) > .image_game {
+  background-image: url(../images/info_3.png);
+}
+.sub_bloco_jogos:nth-child(6n + 3) > .image_game {
+  background-image: url(../images/info_4.png);
+}
+.sub_bloco_jogos:nth-child(6n + 4) > .image_game {
+  background-image: url(../images/info_5.png);
+}
+.sub_bloco_jogos:nth-child(6n + 5) > .image_game {
+  background-image: url(../images/info_6.png);
+}
+
+/* ------------------------- NOVA PARTIDA ----------------------------- */
+
+.nova_partida_bloco_pesquisa {
+  position: relative;
+  display: block;
+  margin-top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 40px;
+  /* background-color: aqua; */
+}
+
+.front_invisible h5 {
+  position: relative;
+  display: block;
+  text-align: left;
+  padding-left: 15%;
+  color: rgb(154, 154, 154);
+}
+
+.resultado_busca {
+  position: relative;
+  display: block;
+  margin-top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 38%;
+  /* background-color: rgb(34, 255, 0); */
+  overflow-y: auto;
+}
+
+.nome_escolher_pecas {
+  position: relative;
+  display: block;
+  left: 15%;
+  width: 70%;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  /* background-color: #00615d; */
+  color: rgb(154, 154, 154);
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  margin-top: 2px;
+}
+
+.escolher_cor_pecas {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  /* background-color: rgb(0, 187, 255); */
+  height: 20px;
+  font-weight: 700;
+}
+
+.btn {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 10px 40px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+}
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label {
+  top: -12px;
+  font-size: 12px;
+}
+
+.input_pesquisa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: calc(100% - 55px);
+  background-color: #171717;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 1px 1px 4px rgba(18, 18, 18, 0.694);
+  color: white;
+  font-family: sans-serif;
+  font-size: 17px;
+  padding-left: 55px;
+}
+
+.input_pesquisa::-webkit-input-placeholder {
+  /* padding-left: 55px; */
+  font-size: 14px;
+}
+
+.input_pesquisa::-moz-placeholder {
+  font-size: 14px;
+}
+
+.icone.lupa {
+  width: 12px;
+  height: 12px;
+  border: 3px solid rgb(235, 235, 235);
+  border-radius: 50%;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.icone.lupa:after {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: rgb(235, 235, 235);
+  display: block;
+  content: "";
+  top: 50%;
+  left: 50%;
+
+  transform: rotate(45deg);
+  transform-origin: 0px 10px;
+}
+
+.jogador_escolhido {
+  position: relative;
+  display: block;
+  margin-top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 45px;
+  /* background-color: rgb(255, 0, 255); */
+  overflow: hidden;
+  text-align: center;
+  justify-content: center;
+  border-top: 1px solid rgba(176, 176, 176, 0.605);
+}
+
+.resultado_busca li {
+  list-style-type: none;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 50px;
+  text-align: left;
+  /* padding-left: 10px; */
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.resultado_busca li:hover {
+  background-color: rgb(96, 96, 96);
+}
+
+.resultado_busca li h3 {
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.resultado_busca li h6 {
+  font-size: 10px;
+  margin-left: 10px;
+  margin-top: 0px;
+  font-weight: 600;
+  color: rgb(189, 189, 189);
+}
+
+.sem_jogos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 17%;
+  /* line-height: 30px; */
+  /* background-color: pink; */
+  text-align: center;
+  justify-content: center;
+}
+
+.sem_jogos h2 {
+  position: relative;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(152, 152, 152);
+}
+
+.sem_jogos img {
+  position: relative;
+  display: block;
+  height: auto;
+  width: 20%;
+  left: 40%;
+}
+
+.nome_jogador_escolhido {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #00daa7;
+  font-weight: 600;
+  font-size: 15px !important;
+  width: 100%;
+}
+
+.nome_jogador_escolhido span {
+  color: rgb(154, 154, 154);
+  font-size: 13px;
+}
+
+
+.inputStartGame{
+  display:none;	
+}
+
+/* Customize the label (the container) */
+.container {
+  display: inline-block;
+  position: relative;
+  padding-left: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* background-color: #00615d; */
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 3px;
+  left: 0px;
+  height: 10px;
+  width: 10px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 3.6px;
+  left: 3.6px;
+  width: 3.6px;
+  height: 3.2px;
+  border-radius: 50%;
+  background: white;
+}
+
+
+
+.motivo_jogo {
+  font-weight: 500;
+  color: white !important;
+}
+
+.zona_titulo_interatividade {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  left: 5%;
+  /* background-color: #00615d; */
+  height: 50px;
+  /* line-height: 50px; */
+  margin-top: 5px;
+}
+
+.zona_titulo_interatividade h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 0px;
+  line-height: 50px;
+}
+
+.zona_interatividade {
+  position: relative;
+  height: 17px;
+  width: 130px;
+  /* background-color: rgb(69, 69, 20); */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+}
+
+#nome_mogo_interativo {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 17px;
+  color: rgb(171, 171, 171);
+  /* top: -100%; */
+}
+
+/* The switch - the box around the slider */
+.switch_interatividade {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch_interatividade input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider_interatividade {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(171, 171, 171);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider_interatividade:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: rgb(237, 237, 237);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider_interatividade {
+  background-color: #00886f;
+}
+
+input:focus + .slider_interatividade {
+  box-shadow: 0 0 1px #00886f;
+}
+
+input:checked + .slider_interatividade:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider_interatividade.round {
+  border-radius: 17px;
+}
+
+.slider_interatividade.round:before {
+  border-radius: 50%;
+}
