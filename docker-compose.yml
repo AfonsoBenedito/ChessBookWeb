@@ -1,0 +1,38 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: chess-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-rootpass}"
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - ./mysql-init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - chess-net
+
+  app:
+    build: ./code
+    container_name: chess-app
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - chess-net
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: "${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+
+networks:
+  chess-net:
+    driver: bridge
+

@@ -1,0 +1,375 @@
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.background {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #282828;
+}
+
+.header_options {
+  position: absolute;
+  float: right;
+  right: 35px;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+
+
+.header_options li {
+  list-style-type: none;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  /* background-color: #006a5c; */
+  top: 5px;
+  cursor: pointer;
+  /* background-color: aqua; */
+  text-align: center;
+  /* padding-top: 4px; */
+}
+
+.header_options li p {
+  margin-top: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.header_options a{
+	text-decoration: none !important;
+	color: white;
+}
+
+
+.bloco_registo_login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 750px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  background-color: #171717;
+  border-radius: 8px;
+  box-shadow: 0px 0px 6px #101010b1;
+}
+
+.sub_bloco_info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  /* background-color: #006f5b; */
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  overflow: visible;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.sub_bloco_info:hover {
+  transform: scale(1.01);
+}
+
+.sub_bloco_registo_login {
+  /* display: none; */
+  position: absolute;
+  top: 0;
+  float: right;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  /* background-color: rgb(192, 246, 255); */
+}
+
+.slide_total {
+  position: absolute;
+  left: 0px;
+  width: 300%;
+  top: 5%;
+  height: 90%;
+  /* background-color: rgba(172, 255, 47, 0.612); */
+  justify-content: space-evenly;
+  display: flex;
+  transition: all 0.4s ease-in-out;
+}
+
+.info_parcela {
+  list-style-type: none;
+  position: relative;
+  /* display: inline-block; */
+  justify-content: space-evenly;
+  width: 33%;
+  height: 100%;
+  /* background-color: red; */
+}
+
+.btns_slide {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 7%;
+  width: 38px;
+  height: 10px;
+  /* background-color: darkblue; */
+  z-index: 2;
+  justify-content: space-evenly;
+  display: flex;
+}
+
+.btns_slide li {
+  list-style-type: none;
+  width: 6px;
+  height: 6px;
+  top: 0;
+  /* background-color: rgba(255, 255, 255, 0); */
+  border-radius: 20px;
+  border: 1.5px solid rgba(255, 255, 255);
+  cursor: pointer;
+}
+
+.btns_slide li:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+#info_1 {
+  background-color: rgb(255, 255, 255);
+}
+#info_2 {
+  background-color: rgba(255, 255, 255, 0);
+}
+#info_3 {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+/* EXEMPLO
+.btns_slide li:last-child {
+  background-color: rgba(255, 255, 255, 0);
+} */
+
+.info_imagem {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 30%;
+  /* background-color: pink; */
+}
+
+.info_imagem img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  width: auto;
+}
+
+.info_texto {
+  position: absolute;
+  top: 40%;
+  left: 5%;
+  width: 90%;
+  height: 45%;
+  /* background-color: rgb(0, 79, 139); */
+  text-align: center;
+  color: white;
+}
+
+.info_texto h3 {
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.info_texto p {
+  font-size: 12px;
+}
+
+.bloco_btns_registo_login {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10%;
+  height: 22px;
+  /* background-color: green; */
+  width: 180px;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 14px;
+  color: white;
+}
+
+.pag_registo_btn {
+  position: relative;
+  width: 55%;
+  /* background-color: yellow; */
+  text-align: center;
+  border-bottom: 2px solid #00665d;
+  cursor: pointer;
+  color: #00665d;
+}
+.pag_login_btn {
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  width: 45%;
+  /* background-color: rgb(133, 133, 28); */
+  border-bottom: 2px solid rgba(82, 82, 82, 0.844);
+  color: rgb(111, 111, 111);
+}
+
+/* TESTE ------------- INPUT */
+
+.zona_inputs {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 60%;
+  top: 22%;
+  /* background-color: rgb(201, 73, 73); */
+  text-align: center;
+}
+
+#pag_registo {
+  /* display: none; */
+  display: initial;
+}
+
+#pag_login {
+  /* display: initial; */
+  display: none;
+}
+
+/* ----------------------- */
+
+.input-container {
+  position: relative;
+  margin-bottom: 25px;
+  margin-top: 15px;
+}
+.input-container label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  transition: all 0.2s ease-in-out;
+  padding-left: 6px;
+}
+
+.input-container p {
+  color: rgb(199, 47, 62);
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: left;
+  font-weight: 600;
+  display: none;
+}
+
+.erro_geral {
+  color: rgb(199, 47, 62);
+  font-weight: 600;
+  font-size: 13px;
+  text-align: left;
+  display: none;
+}
+
+.input-container input {
+  border: 0;
+  border-bottom: 2px solid #555;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0 5px 0;
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+}
+.input-container input:focus {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #00665d;
+  /* background-image: linear-gradient(to left top, #006f5b, #006a5c, #00665d, #00615d, #035c5c); */
+}
+.btn {
+  color: #fff;
+  /* background-color: #3ce7a5; */
+  background-image: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 10px 40px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  left: auto;
+  right: auto;
+}
+
+
+.input-container input:focus ~ label,
+.input-container input:valid ~ label {
+  top: -12px;
+  font-size: 12px;
+}
+
+.condicao_registo {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 80px;
+  color: white;
+}
+
+.conta_registada {
+  position: absolute;
+  width: 80%;
+  max-width: 600px;
+  height: 30px;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #006a5c4f;
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  text-align: center;
+  display: none;
+}
+.conta_registada p {
+  margin-top: 6px;
+  color: white;
+  font-weight: 300;
+  font-size: 15px;
+}
