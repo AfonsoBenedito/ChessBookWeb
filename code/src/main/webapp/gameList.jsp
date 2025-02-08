@@ -127,7 +127,7 @@ if (startGame != null){
 	                <p>Painel</p>
 	            </li>
             </a>
-        	<a href="logout.jsp">
+        	<a href="Logout">
 	            <li class="btn_sair" >
 	                <p>Sair</p>
 	            </li>
