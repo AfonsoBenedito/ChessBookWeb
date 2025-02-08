@@ -13,7 +13,7 @@
 	interatividade = (boolean)request.getSession(false).getAttribute("interatividade");
 
 	if (logged != "true"){
-		response.sendRedirect("Registo");
+		response.sendRedirect("/");
 		return;
 	}
 

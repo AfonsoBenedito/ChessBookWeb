@@ -1,4 +1,4 @@
 <%
     session.invalidate();
-    response.sendRedirect("Registo");
+    response.sendRedirect("/");
 %>
