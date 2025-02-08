@@ -25,7 +25,7 @@
 <header>
     <h1>ManageDB</h1>
     <div class="header_options">
-        <a href="logout.jsp">
+        <a href="Logout">
             <li class="btn_sair" >
                 <p>Sair</p>
             </li>

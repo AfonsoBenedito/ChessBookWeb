@@ -10,6 +10,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 <session-config>
 	<session-timeout>60</session-timeout>
 </session-config>
+<welcome-file-list>
+    <welcome-file>Registo</welcome-file>
+</welcome-file-list>
 <servlet>
     <servlet-name>Registo</servlet-name>
     <jsp-file>/registo.jsp</jsp-file>
@@ -33,6 +36,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   <servlet>
     <servlet-name>erro</servlet-name>
     <jsp-file>/error.jsp</jsp-file>
+  </servlet>
+  <servlet>
+    <servlet-name>logout</servlet-name>
+    <jsp-file>/logout.jsp</jsp-file>
   </servlet>
   
  <servlet-mapping>
@@ -58,5 +65,9 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
  <servlet-mapping>
 	 <servlet-name>erro</servlet-name>
 	 <url-pattern>/Erro</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
  </servlet-mapping>
 </web-app>

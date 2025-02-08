@@ -9,11 +9,11 @@ String email = (String)request.getSession(false).getAttribute("email");
 
 if (logged != null){
 	if (!logged.equals("true")){
-		response.sendRedirect("Registo");
+		response.sendRedirect("/");
 		return;
 	}
 } else {
-	response.sendRedirect("Registo");
+	response.sendRedirect("/");
 	return;
 }
 
@@ -127,7 +127,7 @@ if (startGame != null){
 	                <p>Painel</p>
 	            </li>
             </a>
-        	<a href="logout.jsp">
+        	<a href="Logout">
 	            <li class="btn_sair" >
 	                <p>Sair</p>
 	            </li>
