@@ -13,7 +13,7 @@
     <header>
         <h1>ChessBookWEB</h1>
         <div class="header_options">
-        	<a href="logout.jsp">
+        	<a href="Logout">
             <li class="btn_sair" >
                 <p>Sair</p>
             </li>
@@ -39,9 +39,9 @@
         <div class="zona_img"></div>
         <div class="zona_erro">
             <div class="titulo_erro">OOPS... OCORREU UM ERRO.</div>
-            <div class="nome_erro">É apenas um erro de ligação à Base de Dados!</div>
-            <div class="descricao_erro">Voltar à pagina inicial e diverte-te a jogar com os outros jogadores.</div>
-            <a href="logout.jsp" class="btn_voltar_login"><span>Voltar ao Login</span></a>
+            <div class="nome_erro">ï¿½ apenas um erro de ligaï¿½ï¿½o ï¿½ Base de Dados!</div>
+            <div class="descricao_erro">Voltar ï¿½ pagina inicial e diverte-te a jogar com os outros jogadores.</div>
+            <a href="Logout" class="btn_voltar_login"><span>Voltar ao Login</span></a>
         </div>
     </div>
 
