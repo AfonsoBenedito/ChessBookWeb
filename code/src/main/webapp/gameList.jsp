@@ -9,11 +9,11 @@ String email = (String)request.getSession(false).getAttribute("email");
 
 if (logged != null){
 	if (!logged.equals("true")){
-		response.sendRedirect("/");
+		response.sendRedirect("../");
 		return;
 	}
 } else {
-	response.sendRedirect("/");
+	response.sendRedirect("../");
 	return;
 }
 
