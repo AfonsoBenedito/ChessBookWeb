@@ -103,6 +103,22 @@ alias deploy='mvn package; cp target/*.war /var/lib/tomcat9/webapps/'
 ```
 </details>
 
+### Docker Compose
+
+Para correr a aplicação utilizando Docker Compose, certifique-se que tem o Docker instalado e corra o seguinte comando na raiz do projeto:
+
+```bash
+docker compose up
+```
+
+Para correr em *background* (detached mode):
+
+```bash
+docker compose up -d
+```
+
+> **Nota:** A aplicação corre na porta `8080`. Se encontrar um erro `Bind for 0.0.0.0:8080 failed: port is already allocated`, significa que a porta já está a ser utilizada por outro serviço. Pare o serviço conflituoso ou altere a porta no ficheiro `docker-compose.yml`.
+
 ### Run JUnits
 
 Para rodar os testes, basta no Eclipse (ou à sua IDE de eleição) selecionar o diretório `'test/'` e `Run As: -> JUnit Test`
