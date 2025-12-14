@@ -1,0 +1,85 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: chessbook-web
+  annotations:
+    run.googleapis.com/launch-stage: BETA
+    run.googleapis.com/description: "ChessBook Web App with Sidecar MySQL"
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "1" # Single instance to avoid DB corruption
+    spec:
+      containers:
+      # --- App Container ---
+      - name: app
+        image: gcr.io/PROJECT_ID_PLACEHOLDER/chessbook-web:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "127.0.0.1"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_NAME
+          value: "chess"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: "rootpass"
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        startupProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 60 # Allowing ~10 minutes for GCS Fuse DB Init
+          
+      # --- MySQL Sidecar ---
+      - name: db
+        image: mysql:8.0
+        args:
+        - "--default-authentication-plugin=mysql_native_password"
+        - "--innodb-use-native-aio=0" 
+        - "--innodb-doublewrite=0"
+        - "--innodb-flush-log-at-trx-commit=0" 
+        - "--skip-log-bin"               
+        - "--sync-binlog=0"
+        - "--innodb-buffer-pool-size=256M" 
+        - "--innodb-log-file-size=64M"
+        - "--innodb-file-per-table=0" # Store everything in ibdata1 to reduce file mutations
+        - "--lower-case-table-names=1" # Cross-platform compatibility
+        - "--innodb-undo-log-truncate=0" # Reduce I/O on GCS
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "rootpass"
+        - name: MYSQL_DATABASE
+          value: "chess"
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: db-storage
+          mountPath: /var/lib/mysql
+        startupProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          failureThreshold: 60
+
+      volumes:
+      - name: db-storage
+        csi:
+          driver: gcsfuse.run.googleapis.com
+          readOnly: false
+          volumeAttributes:
+            bucketName: PROJECT_ID_PLACEHOLDER-chess-db
+            mountOptions: "implicit-dirs,limit-ops-per-sec=5" # Throttle FS calls to avoid 429s

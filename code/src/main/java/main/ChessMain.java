@@ -11,39 +11,72 @@ import domain.IllegalMoveException;
 import persist.*;
 
 public class ChessMain {
-	
+
 	public static EntityManagerFactory emf;
-	
+
 	private static Scanner sc = new Scanner(System.in);
-	
+
 	static {
 		boolean noEmf = true;
 		int tries = 0;
-		int maxTries = 5;
+		int maxTries = 600;
+
+		java.util.Map<String, String> props = new java.util.HashMap<>();
+		String dbHost = System.getenv("DB_HOST");
+		String dbPort = System.getenv("DB_PORT");
+		String dbName = System.getenv("DB_NAME");
+		String dbUser = System.getenv("DB_USER");
+		String dbPass = System.getenv("DB_PASSWORD");
+
+		if (dbHost != null && !dbHost.isEmpty()) {
+			if (dbPort == null || dbPort.isEmpty())
+				dbPort = "3306";
+			if (dbName == null || dbName.isEmpty())
+				dbName = "chess";
+			String url = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName;
+
+			props.put("javax.persistence.jdbc.url", url);
+			if (dbUser != null)
+				props.put("javax.persistence.jdbc.user", dbUser);
+			if (dbPass != null)
+				props.put("javax.persistence.jdbc.password", dbPass);
+
+			System.out.println("Connecting to Database at: " + url);
+		}
+
 		while (noEmf && tries < maxTries) {
 			try {
-				emf = Persistence.createEntityManagerFactory("chessbookweb");
+				if (!props.isEmpty()) {
+					emf = Persistence.createEntityManagerFactory("chessbookweb", props);
+				} else {
+					emf = Persistence.createEntityManagerFactory("chessbookweb");
+				}
 				noEmf = false;
 			} catch (Exception e) {
 				noEmf = true;
 				tries += 1;
-				System.out.println(e.getMessage());
+				System.out.println("DB Connection Attempt " + tries + "/" + maxTries + " failed: " + e.getMessage());
+				// Sleep briefy to avoid hammering if it's a race condition
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException ie) {
+				}
 			}
 		}
-		
+
 		if (noEmf) {
 			System.out.println("Cant connect to Database");
 		}
 	}
-	
+
 	public static EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-	
+		return emf.createEntityManager();
+	}
+
 	public static void clearCache() {
-        emf.getCache().evictAll();
-    }
-	
+		emf.getCache().evictAll();
+	}
+
 	public static void closeEntityManagerFactory() {
 		emf.close();
 	}
@@ -80,7 +113,8 @@ public class ChessMain {
 				if (currentPlayer.equals(playerOne)) {
 					currentPlayer = playerTwo;
 				} else {
-					currentPlayer = playerOne;				}
+					currentPlayer = playerOne;
+				}
 			}
 
 			goodMove = false;
@@ -88,36 +122,36 @@ public class ChessMain {
 
 		sc.close();
 	}
-	
+
 	public static String convertPosToString(ChessPosition pos) {
-		switch(pos.getCol()) {
+		switch (pos.getCol()) {
 			case 0:
-				return "a"+(pos.getRow() + 1);
+				return "a" + (pos.getRow() + 1);
 
 			case 1:
-				return "b"+(pos.getRow() + 1);
+				return "b" + (pos.getRow() + 1);
 
 			case 2:
-				return "c"+(pos.getRow() + 1);
+				return "c" + (pos.getRow() + 1);
 
 			case 3:
-				return "d"+(pos.getRow() + 1);
+				return "d" + (pos.getRow() + 1);
 
 			case 4:
-				return "e"+(pos.getRow() + 1);
+				return "e" + (pos.getRow() + 1);
 
 			case 5:
-				return "f"+(pos.getRow() + 1);
+				return "f" + (pos.getRow() + 1);
 
 			case 6:
-				return "g"+(pos.getRow() + 1);
+				return "g" + (pos.getRow() + 1);
 
 			case 7:
-				return "h"+(pos.getRow() + 1);
+				return "h" + (pos.getRow() + 1);
 		}
 		return null;
 	}
-	
+
 	private static ChessMove askMove(ChessPlayer player, ChessGame game) {
 		while (true) {
 			System.out.println(player.getName() + " (colunalinha colunalinha):");
@@ -131,7 +165,7 @@ public class ChessMain {
 			}
 		}
 	}
-	
+
 	private static ChessMove convertMove(String input, ChessPlayer player, ChessGame game) throws Exception {
 		ChessMove move = null;
 		int timeMilli = 0;
@@ -139,7 +173,9 @@ public class ChessMain {
 		int rowFrom;
 		int colTo;
 		int rowTo;
-		if (input.length() != 5 || input.charAt(2) != ' ' || !Character.isDigit(input.charAt(1)) || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(4)) || !Character.isLetter(input.charAt(3))) {
+		if (input.length() != 5 || input.charAt(2) != ' ' || !Character.isDigit(input.charAt(1))
+				|| !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(4))
+				|| !Character.isLetter(input.charAt(3))) {
 			throw new Exception("Input is wrongly formmated");
 		} else {
 			switch (input.charAt(0)) {
@@ -178,7 +214,7 @@ public class ChessMain {
 				default:
 					throw new Exception("Input is wrong, From Column");
 			}
-			
+
 			switch (input.charAt(3)) {
 				case 'a':
 					colTo = 0;
@@ -215,26 +251,25 @@ public class ChessMain {
 				default:
 					throw new Exception("Input is wrong, To Column");
 			}
-			
+
 			rowFrom = Character.getNumericValue(input.charAt(1));
 			rowTo = Character.getNumericValue(input.charAt(4));
-			
+
 			if (rowFrom < 0 || rowFrom > 8 || rowTo < 0 || rowTo > 8) {
 				throw new Exception("Input is wrong, Row's");
 			} else {
 				rowFrom--;
 				rowTo--;
 			}
-			
-			ChessPosition from = new ChessPosition(rowFrom,colFrom);
-			ChessPosition to = new ChessPosition(rowTo,colTo);
 
-			move = new ChessMove(player,game.getBoard().get(rowFrom, colFrom),from,to, timeMilli);
+			ChessPosition from = new ChessPosition(rowFrom, colFrom);
+			ChessPosition to = new ChessPosition(rowTo, colTo);
+
+			move = new ChessMove(player, game.getBoard().get(rowFrom, colFrom), from, to, timeMilli);
 		}
-		
+
 		return move;
 	}
-
 
 	private static void addPlayer() {
 		ChessPlayerDM cpDM = ChessPlayerDM.getInstance();
