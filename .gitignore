@@ -28,6 +28,16 @@ out/
 .DS_Store
 Thumbs.db
 
+# Go binary
+/server
+/chessbookweb
+
+# SQLite data
+/data/
+*.db
+*.db-shm
+*.db-wal
+
 # Dependency caching
 **/dependency-reduced-pom.xml
 

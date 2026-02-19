@@ -1,0 +1,496 @@
+/* COMUM */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0);
+}
+::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to left top,
+    #006f5b,
+    #006a5c,
+    #00665d,
+    #00615d,
+    #035c5c
+  );
+  border-radius: 10px;
+}
+
+* {
+  font-family: sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #282828;
+}
+
+/* ----------------- HEADER ------------------- */
+
+header {
+  position: fixed;
+  top: 30px;
+  left: 5%;
+  width: 90%;
+  height: 40px;
+  /* background-color: yellowgreen; */
+  z-index: 2;
+}
+
+header h1 {
+  position: absolute;
+  margin-top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 20px;
+}
+
+.header_options {
+  position: absolute;
+  float: right;
+  right: 10px;
+  top: 0;
+  height: 100%;
+  width: 25px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-between;
+  color: white;
+}
+
+
+
+.header_options li {
+  list-style-type: none;
+  position: relative;
+  width: fit-content;
+  height: 30px;
+  /* background-color: #006a5c; */
+  top: 5px;
+  cursor: pointer;
+  /* background-color: aqua; */
+  text-align: center;
+  /* padding-top: 4px; */
+}
+
+.header_options li p {
+  margin-top: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.header_options a{
+	text-decoration: none !important;
+	color: white;
+}
+
+/* -------- BUTTONS PRINCIPAIS -------- */
+
+.zona_btns_principais {
+  position: fixed;
+  top: 95px;
+  height: 40px;
+  width: 300px;
+  /* background-color: #00615d; */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn_partidas,
+#btn_jogadores {
+  position: relative;
+  width: 50%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#btn_partidas {
+  /* background-color: rgb(210, 109, 31); */
+  color: #22b08a;
+  /* border-bottom: 3px solid #22b08a; */
+  border-bottom-color: #22b08a;
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+}
+
+#btn_jogadores {
+  /* background-color: rgb(194, 44, 164); */
+  color: rgb(91, 91, 91);
+  /* border-bottom: 2px solid rgb(91, 91, 91); */
+  border-bottom-color: rgb(91, 91, 91);
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+#btn_partidas:hover,
+#btn_jogadores:hover {
+  font-size: 16px;
+  border-bottom-width: 4px;
+}
+
+/* -------- BUTTONS SECUNDÃ�RIOS -------- */
+
+.zona_btns_secundarios {
+  position: fixed;
+  top: 95px;
+  height: 40px;
+  width: 150px;
+  /* background-color: #00615d; */
+  left: 50%;
+  transform: translateX(383%);
+  right: 10%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 1610px) {
+  .zona_btns_secundarios {
+    transform: none;
+    left: auto;
+    float: right;
+    right: 5%;
+  }
+}
+
+#btn_resetDB,
+#btn_apagarDB {
+  position: relative;
+  width: 50%;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#btn_resetDB {
+  color: rgb(206, 167, 83);
+}
+
+#btn_apagarDB {
+  color: rgb(206, 101, 83);
+}
+
+#btn_resetDB:hover,
+#btn_apagarDB:hover {
+  font-size: 13px;
+}
+
+/* ----------------- PAGINA GERAL ------------------- */
+
+.zona_nome {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 140px;
+  /* background-color: pink; */
+  display: flex;
+  justify-content: space-evenly;
+  color: white;
+}
+
+.zona_nome h2 {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.zona_nome span {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+#content_total_partidas,
+#content_total_jogadores {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1450px;
+  background-color: rgba(50, 50, 50, 0.8);
+  height: 600px;
+  border-radius: 8px;
+  /* display: flex; */
+  /* justify-content: space-evenly; */
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#content_total_partidas {
+  display: initial;
+}
+
+#content_total_jogadores {
+  display: none;
+}
+
+.back_blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: rgba(157, 157, 157, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 8px rgba(18, 18, 18, 0.694);
+}
+
+.header_table,
+.header_table_jogadores {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50px;
+  /* background-color: #006618; */
+  font-size: 15px;
+  font-weight: 600;
+  background-color: rgba(33, 33, 33, 0.2);
+}
+
+.conteudo_dinamico {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 52px);
+  top: 52px;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* background-color: rgba(192, 56, 56, 0.904); */
+}
+
+.display_game,
+.display_jogador {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  left: 0;
+  /* background-color: rgb(0, 187, 255); */
+}
+
+.linha_table,
+.linha_table_jogador {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 50px;
+  /* background-color: #00665d; */
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  list-style-type: none;
+  margin-bottom: 2px;
+}
+
+.display_game:nth-child(2n + 1) > .linha_table > .arg_id,
+.display_game:nth-child(2n + 1) > .linha_table > .arg_meio,
+.display_game:nth-child(2n + 1) > .linha_table > .arg_btn,
+.display_game:nth-child(2n + 1) > .linha_table > .arg_eliminar,
+.display_jogador:nth-child(2n + 1) > .linha_table_jogador > .arg_id_jogador,
+.display_jogador:nth-child(2n + 1) > .linha_table_jogador > .arg_meio_jogador,
+.display_jogador:nth-child(2n + 1) > .linha_table_jogador > .arg_btn_jogador,
+.display_jogador:nth-child(2n + 1)
+  > .linha_table_jogador
+  > .arg_eliminar_jogador {
+  background-color: rgba(223, 223, 223, 0.1);
+}
+
+.display_game:nth-child(2n) > .linha_table > .arg_id,
+.display_game:nth-child(2n) > .linha_table > .arg_meio,
+.display_game:nth-child(2n) > .linha_table > .arg_btn,
+.display_game:nth-child(2n) > .linha_table > .arg_eliminar,
+.display_jogador:nth-child(2n) > .linha_table_jogador > .arg_id_jogador,
+.display_jogador:nth-child(2n) > .linha_table_jogador > .arg_meio_jogador,
+.display_jogador:nth-child(2n) > .linha_table_jogador > .arg_btn_jogador,
+.display_jogador:nth-child(2n) > .linha_table_jogador > .arg_eliminar_jogador {
+  background-color: rgba(160, 160, 160, 0.05);
+}
+
+.display_jogadas {
+  position: relative;
+  /* display: block; */
+  display: none;
+  width: calc(94.8% - 8px);
+  left: calc(5% + 4px);
+  height: fit-content;
+  /* background-color: rebeccapurple; */
+  margin-bottom: 2px;
+}
+
+.sub_linha_table,
+.sub_header_table {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 35px;
+  /* background-color: pink; */
+  font-size: 13px;
+  left: 0;
+  border-radius: 8px;
+  margin-top: 2px;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.sub_linha_table:last-child {
+  margin-bottom: 15px;
+}
+
+.sub_linha_table:first-child {
+  font-weight: 600 !important;
+}
+
+/* .sub_linha_table:nth-child(2n) {
+  background-color: rgb(31, 105, 128);
+} */
+
+.sub_linha_table:nth-child(2n) > .sub_arg {
+  background-color: rgba(232, 232, 232, 0.2); /* Esta Ã© a linha que se altera */
+}
+
+.sub_arg,
+.sub_arg_reset {
+  position: relative;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  color: white;
+  /* width: calc(19% - 1.5px); */
+  /* background-color: #006618; */
+  cursor: default;
+}
+
+.sub_arg {
+  width: calc(13.55% - 1.5px);
+}
+
+.penultimo_sub {
+  border-radius: 0px 8px 8px 0px !important;
+}
+
+.sub_arg_reset,
+.sub_arg_reset_vazio {
+  width: calc(5% - 1.5px);
+  font-size: 10px;
+  color: rgb(250, 164, 164);
+  line-height: 17.5px;
+}
+
+.sub_arg_reset:hover {
+  transform: scale(0.96);
+  cursor: pointer;
+  color: rgb(236, 130, 130);
+}
+
+.arg_id,
+.arg_meio,
+.arg_btn,
+.arg_eliminar,
+.arg_id_jogador,
+.arg_meio_jogador,
+.arg_btn_jogador,
+.arg_eliminar_jogador {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  cursor: default;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.arg_meio {
+  width: calc(14.15% - 3px);
+  /* background-color: rgb(103, 28, 40); */
+  
+}
+
+.arg_meio_jogador {
+  width: calc(15% - 3px);
+  /* background-color: rgb(103, 28, 40); */
+}
+
+.arg_id,
+.arg_btn,
+.arg_eliminar,
+.arg_id_jogador,
+.arg_btn_jogador,
+.arg_eliminar_jogador {
+  width: 5%;
+  /* background-color: rgb(74, 74, 14); */
+}
+
+.arg_btn,
+.arg_btn_jogador {
+  font-size: 22px !important;
+  /* transform: rotate(90deg); */
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.arg_eliminar,
+.arg_eliminar_jogador {
+  font-size: 16px !important;
+  /* transform: rotate(90deg); */
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.arg_btn_expandir,
+.arg_btn_eliminar,
+.arg_btn_eliminar_jogador {
+  position: relative;
+  /* display: block; */
+  color: rgb(255, 255, 255);
+  /* background-color: rgb(9, 123, 9); */
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  /* left: 50%; */
+  top: 15px;
+  cursor: pointer;
+  /* transform: rotate(90deg); */
+}
+
+.arg_btn_eliminar,
+.arg_btn_eliminar_jogador {
+  /* background-color: #00615d; */
+  color: rgb(250, 164, 164);
+  cursor: pointer;
+}
+
+.arg_btn_eliminar:hover,
+.arg_btn_eliminar_jogador:hover {
+  transform: scale(0.9);
+}
+
+.arg_btn_expandir:hover {
+  transform: scale(0.9);
+}
