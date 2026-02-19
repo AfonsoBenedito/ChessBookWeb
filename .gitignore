@@ -1,5 +1,6 @@
-# Go binary
+# Go binaries
 /server
+/seed
 
 # SQLite data
 /data/

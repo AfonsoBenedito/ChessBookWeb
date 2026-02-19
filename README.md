@@ -1,139 +1,265 @@
-# ChessBook WEB
-A aplicação web, ChessBook Web, é a 2ª iteração do projeto da cadeira de Construção de Sistemas de *Software*.
-Construida com base em Java, o *software* acrescenta uma interface gráfica ao projeto entregue na 1ª iteração.\
-Optamos por escolher fazer os *servlets* nas páginas `.jsp`, como tal decidimos adicionar mais métodos aos nossos ficheiros `.java`. \
-Para além da interface visual, foram também acrescentadas as seguintes funcionalidades:
-* Interatividade com as peças e o tabuleiro
-* Jogabilidade com respostas no momento
-* Interface administrativa de gestão de jogos
-* Possibilidade de rever as suas jogadas
-* Possibilidade de escolher a cor da peça com que deseja jogar
-* Cronômetros com a duração de jogadas, tempo total e tempo gasto por cada jogador
+<div align="center">
 
-### Páginas
-* Registo/Login `(/Registo)`
-* Game List `(/GameList)`
-* Game `(/Game)`
-* ManageDB `(/ManageDB)`
-* Erro `(/Erro)`
+<img src="static/images/favicon.ico" width="96" alt="ChessBookWeb" />
 
-Para se aceder ao Game List é necessário ter o login feito. O Game necessita de vir acompanhado por um id, e.g., */Game?Id=0*, não sendo necessário tratar-se de um jogo do mesmo.
+# ChessBookWeb
+
+**A cloud-native, turn-based chess platform — single binary, zero dependencies.**
+
+Play, watch, and review chess games in real time directly from your browser.
+
+<br/>
+
+[![Deploy to Cloud Run](https://github.com/AfonsoBenedito/ChessBookWeb/actions/workflows/deploy.yml/badge.svg?branch=for-cloud-run)](https://github.com/AfonsoBenedito/ChessBookWeb/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Go](https://img.shields.io/badge/Go-1.23-00ADD8?logo=go&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-embedded-003B57?logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-~12MB_image-2CA5E0?logo=docker&logoColor=white)
+![Cloud Run](https://img.shields.io/badge/Google_Cloud_Run-deployed-4285F4?logo=googlecloud&logoColor=white)
+
+> **`for-cloud-run` branch** — full rewrite in Go + SQLite, built to run for free on Google Cloud Run.
+> The original Java + Tomcat + MySQL implementation lives on the [`main`](../../tree/main) branch.
+
+</div>
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Why a rewrite?](#why-a-rewrite)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [CI/CD](#cicd)
+- [Project Structure](#project-structure)
+- [Pages](#pages)
+- [Authors](#authors)
+
+---
+
+## Overview
+
+ChessBookWeb started as a university project in 2022 — a full-stack chess web app where two registered players can challenge each other, play turn-by-turn, and review their game history move by move.
+
+The goal of this branch was to take the original Java application and rethink it from the ground up with one constraint: **it must run on Google Cloud Run at zero cost**. That meant no VM, no managed database, no idle servers — just a single, self-contained Go binary that boots in milliseconds and sleeps when nobody is playing.
+
+<div align="center">
+  <img src="static/images/info_4.png" width="160" alt="ChessBookWeb mascot" />
+</div>
+
+---
+
+## Why a rewrite?
+
+The original Java + Tomcat + MySQL stack required a persistent VM and a separate database server to run. This branch replaces all of that with a single Go binary and an embedded SQLite database.
+
+| | `main` (Java) | `for-cloud-run` (Go) |
+|:--|:--:|:--:|
+| Language | Java 17 | Go 1.23 |
+| Web layer | Tomcat 9 · JSP | `net/http` (stdlib) |
+| Database | MySQL 8 | SQLite (embedded) |
+| Docker image size | ~500 MB | ~12 MB |
+| Infrastructure | VM + DB server | Single container |
+| Live board updates | AJAX polling (300ms) | Server-Sent Events |
+| Deployment | Manual | Automatic (push to deploy) |
+| Session storage | Server-side | HMAC-SHA256 signed cookies |
+
+---
+
+## Features
+
+**Game engine**
+- ♟️ Full legal move validation — check, checkmate, stalemate detection
+- 🏰 Special moves — castling (kingside & queenside), en passant, pawn promotion
+- 👁️ Move preview — click any piece to highlight its valid squares instantly
+- 🔄 Replay — step through every move of any completed game
+
+**Live experience**
+- ⚡ Real-time updates via [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) — board changes pushed instantly to all watchers, no polling
+- ⏱️ Per-player timers — individual move time and cumulative game time
+
+**Player controls**
+- 🤝 Draw system — offer, accept, or refuse a draw mid-game
+- 🏳️ Resign — concede at any point
+- 🎨 Board flip — view the board from either colour's perspective
+
+**Platform**
+- 🔐 Stateless sessions — HMAC-SHA256 signed cookies, no server-side session store needed
+- 🛡️ Admin dashboard — manage all players and games
+
+---
+
+## Architecture
+
+```
+┌──────────────────────────────────────────┐
+│            Google Cloud Run              │
+│                                          │
+│  ┌────────────────────────────────────┐  │
+│  │          Go HTTP Server            │  │
+│  │                                    │  │
+│  │  ┌──────────┐   ┌──────────────┐  │  │
+│  │  │  chess/  │   │  handlers/   │  │  │
+│  │  │  engine  │   │  + SSE hub   │  │  │
+│  │  └──────────┘   └──────────────┘  │  │
+│  │                                    │  │
+│  │         ┌──────────────┐           │  │
+│  │         │     db/      │  SQLite   │  │
+│  │         └──────────────┘           │  │
+│  └────────────────────────────────────┘  │
+└──────────────────────────────────────────┘
+              ▲  auto-deploy on git push
+┌──────────────────────────────────────────┐
+│              GitHub Actions              │
+│                                          │
+│  checkout → auth (WIF) → docker build    │
+│  → push to Artifact Registry             │
+│  → deploy to Cloud Run                   │
+└──────────────────────────────────────────┘
+```
+
+> **Persistence note:** Cloud Run instances are ephemeral — the SQLite database lives at `/tmp/chess.db` and resets on cold start. This is intentional for a zero-cost deployment. For a production setup, mount a persistent volume or swap SQLite for a managed database.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Go 1.23+](https://go.dev/dl/)
+- [Docker](https://docs.docker.com/get-docker/) *(optional, for container workflow)*
+
+### Run locally with Go
+
+```bash
+make run
+```
+
+Starts the server at **http://localhost:8080** and creates `./data/chess.db` automatically.
+
+### Run locally with Docker
+
+```bash
+make docker-up    # Build image and start container
+make docker-down  # Stop and remove container
+```
+
+### Seed with mock data
+
+```bash
+make seed     # Populate DB with sample players and games
+make reseed   # Wipe DB and re-seed from scratch
+```
+
+### All Makefile targets
+
+| Target | Description |
+|:--|:--|
+| `make run` | Run with `go run` (no compile step) |
+| `make build` | Compile binary to `./server` |
+| `make start` | Build then run the binary |
+| `make docker-up` | Build Docker image and start container |
+| `make docker-down` | Stop and remove container |
+| `make seed` | Populate DB with mock players and games |
+| `make reseed` | Wipe DB and re-seed |
+| `make clean` | Remove binary and local database |
+
+### Environment variables
+
+| Variable | Required | Default | Description |
+|:--|:--:|:--|:--|
+| `SESSION_SECRET` | ✅ | — | Secret key for HMAC-SHA256 session signing |
+| `DB_PATH` | | `./data/chess.db` | Path to the SQLite database file |
+| `PORT` | | `8080` | HTTP listen port |
+
+---
+
+## CI/CD
+
+Every push to this branch triggers a GitHub Actions pipeline that:
+
+1. **Authenticates** to GCP via [Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation) — no stored service account keys
+2. **Builds** a multi-stage Docker image with layer caching (`~12 MB` final size)
+3. **Pushes** to Google Artifact Registry (`europe-southwest1`)
+4. **Deploys** to Google Cloud Run with zero downtime
+
+### First-time GCP setup
+
+```bash
+bash setup-gcp.sh
+```
+
+Run this once from a machine with `gcloud` authenticated as project owner. It provisions the Artifact Registry repository, service account, and Workload Identity Pool, then prints the three secrets to add to your GitHub repo:
+
+| GitHub Secret | Description |
+|:--|:--|
+| `WIF_PROVIDER` | Workload Identity Federation provider resource name |
+| `WIF_SERVICE_ACCOUNT` | Service account email for deployments |
+| `SESSION_SECRET` | Secret key for HMAC session signing |
+
+---
+
+## Project Structure
+
+```
+.
+├── main.go                  # HTTP server entry point, routing, embedded assets
+├── chess/
+│   ├── board.go             # Board state, move execution, check detection
+│   ├── game.go              # Game logic, move conversion
+│   └── types.go             # Piece types, colours, move structs
+├── db/
+│   ├── db.go                # SQLite init and schema migrations
+│   ├── games.go             # Game CRUD operations
+│   └── players.go           # Player CRUD operations
+├── handlers/
+│   ├── auth.go              # Register / login / logout
+│   ├── game.go              # Game page and move handling
+│   ├── gamelist.go          # Game list and new game creation
+│   ├── admin.go             # Admin dashboard
+│   ├── sse.go               # Server-Sent Events broadcaster
+│   ├── session.go           # HMAC-signed cookie sessions
+│   └── templates.go         # Template rendering helpers
+├── templates/               # html/template views (server-rendered)
+├── static/                  # Embedded CSS, JavaScript, images
+├── cmd/seed/                # Dev tool: populate DB with mock data
+├── Dockerfile               # Multi-stage build → distroless, ~12 MB
+├── docker-compose.yml       # Local container setup
+├── setup-gcp.sh             # One-time GCP provisioning script
+├── Makefile                 # Developer shortcuts
+└── .github/workflows/
+    └── deploy.yml           # CD pipeline (build → push → deploy)
+```
+
+---
+
+## Pages
+
+| Route | Page | Auth |
+|:--|:--|:--:|
+| `/Registo` | Register & Login | — |
+| `/GameList` | Your games dashboard | ✅ |
+| `/Game?Id=X` | Play or replay game `X` | — |
+| `/ManageDB` | Admin dashboard | ✅ |
+| `/Erro` | Error page | — |
+
+---
 
 ## Authors
 
-- [Afonso Benedito | 54937](https://git.alunos.di.fc.ul.pt/fc54937)
-- [Afonso Telles | 54945](https://git.alunos.di.fc.ul.pt/fc54945)
-- [Tomás Ndlate | 54970](https://git.alunos.di.fc.ul.pt/fc54970)
+Built at [ISCTE – Instituto Universitário de Lisboa](https://www.iscte-iul.pt/) in 2022.
 
-## Login/Registo
-Para aceder ao jogo, primeiro tem que se passar pela autenticação.\
-Para tal, encontramos na parte direita da página a secção de Registo, onde após o realizar poderá também encontrar o *Login*.\
-Este endereço utiliza o `DataMapper` do Jogador para aceder aos registos da base de dados e fazendo assim a autenticação.\
-A parte esquerda da página reserva-se a uma pequena secção com curiosidades sobre o Xadrez.
-É através de esta página que será redirecionado para a sua sessão.
+| Name | Student ID |
+|:--|:--|
+| Afonso Benedito | 54937 |
+| Afonso Telles | 54945 |
+| Tomás Ndlate | 54970 |
 
-## Game List
-Nesta página encontramos a central de jogos.
-- Na Parte Esquerda, encontramos os jogos em andamento, devidamente identificados com o seu *id*, número de jogadas já realizadas, adversário e a opção de Jogar.
-    -  Caso deseje, pode selecionar a opção de utilizar o modo interativo. Este, ativa o modo `Ajax`, que permite ao jogador ter as jogadas a acontecerem em tempo real assim como as casas para onde a peça se pode deslocar, melhorando a experiência e a jogabilidade.
-* Ao Centro, encontramos principais sugestões de adversários. Basta selecionar um - pode ver quem selecionou mais abaixo - e escolher a cor das peças com que deseja jogar (pode tambem selecionar a opção que o torna aleatório). Carregando em "Começar Jogo", será redirecionado para a página de jogo.
-* Na Parte Direita, encontramos o histórico de jogos onde podemos ver o *id*, número de jogadas totais, o adversário, o motivo da finalização do jogo e a opção de o rever (*Replay*)
+---
 
-## Game
-Nesta, que é a página principal do projeto, temos acesso ao jogo, onde o jogador terá o tabuleiro virado conforme a cor das suas peças.
-- Na Parte Esquerda, encontramos em cima o painel informativo referente ao jogador das peças pretas; em baixo o painel do jogador das peças brancas.
-    - Podemos ver as peças capturadas por cada um dos jogadores, assim como o tempo total gasto por si
+<div align="center">
 
-- No centro, encontramos o tabuleiro de xadrez, atualizado com a jogada mais recente, por defeito. Neste podemos efetuar jogadas `selecionando a peça que deseja movimentar`, seguida da seleção da casa para onde pretende ir. Através do recurso a `Ajax`, podemos ver que são sugeridas as jogadas possiveis para essa peça. Caso queira desselecionar a peça, basta carregar novamente nela. Caso esteja jogue um peão para posição de **promoção**, um *pop-up* irá aparecer para que decida qual peça escolher. 
+Released under the [MIT License](LICENSE) · © 2022 Afonso Benedito
 
-- Na Parte Direita, encontramos a Área Pessoal do jogador.
-    - Caso seja a sua vez de jogar, pode ver que o `cronômetro` terá iniciado na primeira vez que abriu a página, após o seu adversário ter feito a sua jogada.
-    - Tem a opção de rodar o tabuleiro caso deseje, carregando no botão
-    - Pode, caso prefira, fazer a sua jogada através de texto e carregando em Introduzir Jogada.
-    - Tem ainda a opção de desistir do jogo, ou fazer um pedido de empate (que terá que ser aceite pelo adversário).
-    - Por fim, tem a opção de rever jogadas carregado nos botões com as setas representativas, assim como um botão que retorna à jogada mais recente
-
-## Manage DB
-Nesta página encontramos o *dashboard* do *admin*, onde o mesmo poderá gerir as Partidas e os Jogadores.
-- Em `Partidas` temos acesso a uma tabela que mostra todos os jogos, tanto `A Decorrer` como `Terminado`'s. Conseguimos ver que Jogadores estão envolvidos. Podemos ver o vencedor (caso tenha terminado). Pode também expandir o jogo para ver as jogadas.
-- Em `Jogadores` temos acesso a uma tabela que mostra todos os jogadores inscritos. Podemos ver quantos jogos têm, quantas vitórias, empates e derrotas têm. É possivel também remover jogadores individualmente.
-
-
-## Exemplos
-#### Opte por entrar com o nome de utilizador `tl` e o e-mail `tl@fcul`
-Para testar o maior número de funcionalidades disponiveis, observe os seguintes jogos e faça o indicado:
-Estes jogos demonstrarão as seguintes situações:
-- Jogo `ganho` por Player 1 (`tl`) (ID: #52)
-- Jogo `perdido` por Player 1 (`tl`) (ID: #53)
-- Jogo a `1 CheckMate de distância` (ID: #55)
-    - Fazer jogada **h5 f7**
-- Jogo `Empatado` (ID: #56)
-- Jogo com `empate por decidir durante jogada` (ID: #57)
-- Jogo com `empate por decidir` (ID: #58)
-    - Poderá decidir se **aceita** ou **não** o empate
-- Jogo a `1 move de promoção` (ID: #59)
-    - Fazer jogada **f7 f8**
-- Jogo do `início` (ID: #60)
-- Jogo `à espera de jogada` (ID: #61)
-- Jogo com `Enpassant` (ID: #62)
-    - Fazer jogada **e5 d6**
-- Jogo com `Castle Short` (ID: #63)
-    -   Fazer jogada **e1 g1**
-- Jogo com `Castle Long` (ID: #64)
-    - Fazer jogada **e1 c1**
-
-  
-### Deploy
-
-Para fazer *deploy* deste projeto, é necessario aceder ao Eclipse (ou à sua IDE de eleição) e correr o programa em `Run As: -> Maven Build`
-Pode também utilizar o terminal:
-
-```bash
-  mvn clean
-  mvn package
-```
-
-Após ser extraido o ficheiro `.war`, o mesmo deve ser colocado no servidor (TomCat). Ao ser dado *deploy*, o mesmo fica disponível para ser acedido.
-
-<details>
-<summary>Caso deseje, para facilitar a tarefa de *deploy* pode criar um *alias* que tratará do acima referido por si:</summary>
-
-```bash
-alias deploy='mvn package; cp target/*.war /var/lib/tomcat9/webapps/'
-```
-</details>
-
-### Docker Compose
-
-Para correr a aplicação utilizando Docker Compose, certifique-se que tem o Docker instalado e corra o seguinte comando na raiz do projeto:
-
-```bash
-docker compose up
-```
-
-Para correr em *background* (detached mode):
-
-```bash
-docker compose up -d
-```
-
-> **Nota:** A aplicação corre na porta `8080`. Se encontrar um erro `Bind for 0.0.0.0:8080 failed: port is already allocated`, significa que a porta já está a ser utilizada por outro serviço. Pare o serviço conflituoso ou altere a porta no ficheiro `docker-compose.yml`.
-
-### Run JUnits
-
-Para rodar os testes, basta no Eclipse (ou à sua IDE de eleição) selecionar o diretório `'test/'` e `Run As: -> JUnit Test`
-
-```bash
-├───src
-│   ├───main
-│   └───test
-│       └───java
-│           ├───domain
-│           └───persist
-```
-
-### Used Stack
-
-**Front-end:** HTML, CSS, JavaScript, Java
-
-**Back-end:** Java, MySQL
+</div>
