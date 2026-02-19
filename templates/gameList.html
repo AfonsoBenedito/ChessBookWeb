@@ -1,0 +1,178 @@
+{{define "gameList.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/geral.css">
+    <link rel="stylesheet" href="/static/styles/gameList.css">
+    <title>Game List</title>
+</head>
+<body>
+    <header>
+        <h1>ChessBookWEB</h1>
+        <div class="header_options">
+            <a href="/ManageDB">
+                <li class="btn_sair">
+                    <p>ManageDB</p>
+                </li>
+            </a>
+            <a href="/GameList">
+                <li class="btn_sair">
+                    <p>Painel</p>
+                </li>
+            </a>
+            <a href="/Logout">
+                <li class="btn_sair">
+                    <p>Sair</p>
+                </li>
+            </a>
+        </div>
+        <div class="zona_nome">
+            <h2>Olá, <span>{{.Name}}</span></h2>
+        </div>
+    </header>
+
+    <div class="content_total">
+        <div class="box">
+            <div class="back_blur"></div>
+            <div class="front_invisible">
+                <h3>Partidas a decorrer</h3>
+
+                {{if not .Unfinished}}
+                <div class="sem_jogos">
+                    <h2>Não tens partidas a decorrer</h2>
+                    <img src="/static/images/info_3.png" alt="">
+                </div>
+                {{end}}
+
+                <div class="scroll_blocos">
+                    {{range .Unfinished}}
+                    <div class="sub_bloco_jogos">
+                        <div class="first_line">
+                            <h4>#{{.ID}}</h4>
+                            <h4>{{.MoveCount}} jogadas</h4>
+                            <a href="/Game?Id={{.ID}}">
+                                <h4 class="btn_voltar_jogar">Jogar</h4>
+                            </a>
+                        </div>
+                        <div class="second_line">
+                            {{if .IsMyTurn}}
+                                {{if .TieOfferFrom}}
+                                    <h4>É a tua vez de jogares - <span>Pedido de Empate</span></h4>
+                                {{else}}
+                                    <h4>É a tua vez de jogares</h4>
+                                {{end}}
+                            {{else}}
+                                {{if .TieOfferFrom}}
+                                    <h4>Aguarde pelo adversário - <span>Pedido de Empate</span></h4>
+                                {{else}}
+                                    <h4>Aguarde pelo adversário</h4>
+                                {{end}}
+                            {{end}}
+                        </div>
+                        <div class="second_line">
+                            <h4>Adversário: {{.Opponent}}</h4>
+                        </div>
+                        <div class="image_game"></div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="back_blur"></div>
+            <div class="front_invisible">
+                <h3>Nova partida</h3>
+                <div class="nova_partida_bloco_pesquisa">
+                    <input type="text" class="input_pesquisa" id="#" name="#" placeholder="Pesquisa" maxlength="20">
+                    <div class="icone lupa"></div>
+                </div>
+                <h5>Principais sugestões</h5>
+                <div class="resultado_busca">
+                    {{range .Players}}
+                    <li class="liJogador" id="{{.Email}}">
+                        <h3 id="h3{{.Email}}">{{.Name}}</h3>
+                        <h6>{{.Email}}</h6>
+                    </li>
+                    {{end}}
+                </div>
+                <form action="/GameList" method="POST">
+                    <div class="jogador_escolhido">
+                        <div class="nome_jogador_escolhido"><span>Oponente:</span> </div>
+                    </div>
+                    <input name="startGameEmail" class="inputStartGame" required>
+                    <div class="nome_escolher_pecas">Escolher cor</div>
+                    <div class="escolher_cor_pecas">
+                        <label class="container"> Brancas
+                            <input name="cor" type="radio" value="branco" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Pretas
+                            <input name="cor" type="radio" value="preto">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container"> Random
+                            <input name="cor" type="radio" value="random">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">Começar jogo</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="back_blur"></div>
+            <div class="front_invisible">
+                <h3>Histórico de Jogos</h3>
+                {{if not .Finished}}
+                <div class="sem_jogos">
+                    <h2>Ainda não realizaste nenhuma partida</h2>
+                    <img src="/static/images/info_1.png" alt="">
+                </div>
+                {{end}}
+                <div class="scroll_blocos">
+                    {{range .Finished}}
+                    <div class="sub_bloco_jogos_historico">
+                        <div class="third_line">
+                            <h4>#{{.ID}}</h4>
+                            {{if eq .WinResult "draw"}}
+                                <h4 class="empatar_jogo">Empataram o jogo!</h4>
+                            {{else if eq .WinResult "win"}}
+                                <h4 class="vencer_jogo">Venceste o jogo!</h4>
+                            {{else}}
+                                <h4 class="perder_jogo">Perdeste o jogo!</h4>
+                            {{end}}
+                        </div>
+                        <div class="fourth_line">
+                            <h4>Número de jogadas total - {{.MoveCount}} jogadas</h4>
+                            <a href="/Game?Id={{.ID}}">
+                                <h4 class="btn_voltar_reply">Replay</h4>
+                            </a>
+                        </div>
+                        <div class="second_line">
+                            <h4>Adversário: {{.Opponent}}</h4>
+                        </div>
+                        <div class="second_line">
+                            <h4>Motivo: <span class="motivo_jogo">{{.EndDesc}}</span></h4>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        listaJogadores = []
+        {{range .Players}}
+        jogadorAdd = ['{{.Name}}', '{{.Email}}']
+        listaJogadores.push(jogadorAdd)
+        {{end}}
+    </script>
+    <script src="/static/scripts/gamelist.js"></script>
+</body>
+</html>
+{{end}}

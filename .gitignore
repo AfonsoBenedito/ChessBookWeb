@@ -1,36 +1,19 @@
-# Compiled class files
-*.class
-*.war
-*.ear
+# Go binary
+/server
 
-# Log files
-*.log
+# SQLite data
+/data/
+*.db
+*.db-shm
+*.db-wal
 
-# Maven target directory
-/target/
-out/
+# Environment (copy from .env.example)
+.env
 
-# IntelliJ IDEA files
-.idea/
-*.iml
-*.iws
-
-# Java binary files
-*.jar
-*.war
-*.ear
-
-# Generated files
-/.mvn/
-!/.mvn/wrapper/maven-wrapper.jar
-
-# OS-specific files
+# OS-specific
 .DS_Store
 Thumbs.db
 
-# Dependency caching
-**/dependency-reduced-pom.xml
-
-# Gradle (if used in conjunction)
-.gradle/
-build/
+# Editor
+.idea/
+*.iml

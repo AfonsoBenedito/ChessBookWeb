@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: chessbookweb
+spec:
+  template:
+    spec:
+      containers:
+        - image: gcr.io/YOUR_PROJECT/chessbookweb
+          env:
+            - name: DB_PATH
+              value: /tmp/chess.db
+            - name: SESSION_SECRET
+              value: REPLACE_WITH_RANDOM_SECRET
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 1000m
+      containerConcurrency: 80
+      timeoutSeconds: 3600

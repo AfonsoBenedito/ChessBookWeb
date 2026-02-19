@@ -1,0 +1,485 @@
+{{define "game.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/geral.css">
+    <link rel="stylesheet" href="/static/styles/game.css">
+    <title>Game</title>
+</head>
+<body>
+
+<header>
+    <h1>ChessBookWEB</h1>
+    <div class="header_options">
+        <a href="/ManageDB">
+            <li class="btn_sair">
+                <p>ManageDB</p>
+            </li>
+        </a>
+        <a href="/GameList">
+            <li class="btn_sair">
+                <p>Painel</p>
+            </li>
+        </a>
+        <a href="/Logout">
+            <li class="btn_sair">
+                <p>Sair</p>
+            </li>
+        </a>
+    </div>
+    <div class="zona_nome">
+        <h2>Olá, <span>{{.Session.Name}}</span></h2>
+    </div>
+</header>
+
+<!-- Victory/Defeat/Draw modals -->
+<div id="painel_vitoria">
+    <div class="blur_game"></div>
+    <canvas id="Canvas"></canvas>
+    <div id="fechar_pop_up_background"></div>
+    <div class="bloco_resultado">
+        <div class="back_blur"></div>
+        <h5 id="btn_fechar_pop_up">&#215;</h5>
+        <h1 class="ganhar_cor">Ganhaste a partida!</h1>
+        <img src="/static/images/info_4.png" alt="">
+        <h3>Parabéns! Continua a jogar para melhorares as tuas habilidades. Torna-te o Rei do Xadrez!</h3>
+        <div class="zona_btn_vitoria">
+            <a class="btn_a" href="/GameList">
+                <button type="button" class="btn_ir_painel">Ir para painel</button>
+            </a>
+            <button type="button" id="btn_voltar_jogo">Voltar ao jogo</button>
+        </div>
+    </div>
+</div>
+
+<div id="painel_derrota">
+    <div class="blur_game"></div>
+    <div id="fechar_pop_up_background_derrota"></div>
+    <div class="bloco_resultado">
+        <div class="back_blur"></div>
+        <h5 id="btn_fechar_pop_up_derrota">&#215;</h5>
+        <h1 class="perder_cor">Perdeste a partida!</h1>
+        <img src="/static/images/info_3.png" alt="">
+        <h3>Que pena! Continua a jogar para melhorares as tuas habilidades. Torna-te o Rei do Xadrez!</h3>
+        <div class="zona_btn_vitoria">
+            <a class="btn_a" href="/GameList">
+                <button type="button" class="btn_ir_painel">Ir para painel</button>
+            </a>
+            <button type="button" id="btn_voltar_jogo_derrota">Voltar ao jogo</button>
+        </div>
+    </div>
+</div>
+
+<div id="painel_empate">
+    <div class="blur_game"></div>
+    <div id="fechar_pop_up_background_empate"></div>
+    <div class="bloco_resultado">
+        <div class="back_blur"></div>
+        <h5 id="btn_fechar_pop_up_empate">&#215;</h5>
+        <h1 class="empatar_cor">Empataste a partida!</h1>
+        <img src="/static/images/info_5.png" alt="">
+        <h3>Ora bolas! Continua a jogar para melhorares as tuas habilidades. Torna-te o Rei do Xadrez!</h3>
+        <div class="zona_btn_vitoria">
+            <a class="btn_a" href="/GameList">
+                <button type="button" class="btn_ir_painel">Ir para painel</button>
+            </a>
+            <button type="button" id="btn_voltar_jogo_empate">Voltar ao jogo</button>
+        </div>
+    </div>
+</div>
+
+<div class="content_superior">
+    <div class="top_nome_jogadas">
+        <div class="back_blur"></div>
+        <div class="top_id_jogo">#{{.GameID}}</div>
+        <div class="top_numero_jogadas">Total de jogadas - <span>{{.MoveCount}}</span></div>
+        <div class="top_data_inicio">{{.DateStr}}</div>
+    </div>
+    {{if .OutputMove}}
+    <div class="top_erros">
+        <div class="back_blur"></div>
+        <div class="aviso_erro">{{.OutputMove}}</div>
+    </div>
+    {{end}}
+</div>
+
+<div class="content_total">
+    <div class="bloco_lateral_esquerdo">
+        <!-- Black player pieces -->
+        <div class="bloco_pecas">
+            <div class="back_blur"></div>
+            <h3 class="id_nome">{{.BlackName}}</h3>
+            <div class="id_pecas">
+                <div class="bloco_cor preto"></div>
+                <h4 class="nome_cor preto">Peças pretas</h4>
+            </div>
+            <div class="bloco_pecas_capturadas">
+                <h3 class="titulo_pecas_capturadas">Peças capturadas</h3>
+                <div class="show_pecas_capturadas">
+                    <div class="capturadas_cima">
+                        <li><h1 class="brancas">&#9813;</h1><div class="num_peca_comida">{{.Eaten.WQueens}}</div></li>
+                        <li><h1 class="brancas">&#9814;</h1><div class="num_peca_comida">{{.Eaten.WRooks}}</div></li>
+                        <li><h1 class="brancas">&#9815;</h1><div class="num_peca_comida">{{.Eaten.WBishops}}</div></li>
+                    </div>
+                    <div class="capturadas_baixo">
+                        <li><h1 class="brancas">&#9817;</h1><div class="num_peca_comida">{{.Eaten.WPawns}}</div></li>
+                        <li><h1 class="brancas">&#9816;</h1><div class="num_peca_comida">{{.Eaten.WKnights}}</div></li>
+                    </div>
+                </div>
+            </div>
+            <div class="zona_timer">
+                <div class="bloco_timer">
+                    <div class="timer_dia"><div class="timer_number" id="blackDia0">0</div><div class="timer_number" id="blackDia1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_hora"><div class="timer_number" id="blackHora0">0</div><div class="timer_number" id="blackHora1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_min"><div class="timer_number" id="blackMinuto0">0</div><div class="timer_number" id="blackMinuto1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_seg"><div class="timer_number" id="blackSegundo0">0</div><div class="timer_number" id="blackSegundo1">0</div></div>
+                </div>
+                <div class="timer_descricao">
+                    <div class="timer_desc">Dias</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Horas</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Minutos</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Segundos</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- White player pieces -->
+        <div class="bloco_pecas">
+            <div class="back_blur"></div>
+            <h3 class="id_nome">{{.WhiteName}}</h3>
+            <div class="id_pecas">
+                <div class="bloco_cor branco"></div>
+                <h4 class="nome_cor branco">Peças brancas</h4>
+            </div>
+            <div class="bloco_pecas_capturadas">
+                <h3 class="titulo_pecas_capturadas">Peças capturadas</h3>
+                <div class="show_pecas_capturadas">
+                    <div class="capturadas_cima">
+                        <li><h1 class="pretas">&#9819;</h1><div class="num_peca_comida">{{.Eaten.BQueens}}</div></li>
+                        <li><h1 class="pretas">&#9820;</h1><div class="num_peca_comida">{{.Eaten.BRooks}}</div></li>
+                        <li><h1 class="pretas">&#9821;</h1><div class="num_peca_comida">{{.Eaten.BBishops}}</div></li>
+                    </div>
+                    <div class="capturadas_baixo">
+                        <li><h1 class="pretas">&#9823;</h1><div class="num_peca_comida">{{.Eaten.BPawns}}</div></li>
+                        <li><h1 class="pretas">&#9822;</h1><div class="num_peca_comida">{{.Eaten.BKnights}}</div></li>
+                    </div>
+                </div>
+            </div>
+            <div class="zona_timer">
+                <div class="bloco_timer">
+                    <div class="timer_dia"><div class="timer_number" id="whiteDia0">0</div><div class="timer_number" id="whiteDia1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_hora"><div class="timer_number" id="whiteHora0">0</div><div class="timer_number" id="whiteHora1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_min"><div class="timer_number" id="whiteMinuto0">0</div><div class="timer_number" id="whiteMinuto1">0</div></div>
+                    <div class="timer_sep">:</div>
+                    <div class="timer_seg"><div class="timer_number" id="whiteSegundo0">0</div><div class="timer_number" id="whiteSegundo1">0</div></div>
+                </div>
+                <div class="timer_descricao">
+                    <div class="timer_desc">Dias</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Horas</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Minutos</div><div class="timer_sep"></div>
+                    <div class="timer_desc">Segundos</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chess board -->
+    <div class="bloco_jogo">
+        <div class="back_blur"></div>
+        <!-- Promotion popup -->
+        <div class="zona_pop_up_promocao">
+            <div class="back_promocao"></div>
+            <div class="pop_up_promocao">
+                <div class="back_blur"></div>
+                <div class="pecas_promocao_linha">
+                    <div class="peca_promocao {{if .IsWhitePlayer}}branca{{else}}preta{{end}}" id="QUEEN">
+                        <div class="back_blur"></div>
+                        <div class="codigo_peca">&#9819;</div>
+                        <div class="nome_peca">Rainha</div>
+                    </div>
+                    <div class="peca_promocao {{if .IsWhitePlayer}}branca{{else}}preta{{end}}" id="ROOK">
+                        <div class="back_blur"></div>
+                        <div class="codigo_peca">&#9820;</div>
+                        <div class="nome_peca">Torre</div>
+                    </div>
+                </div>
+                <div class="pecas_promocao_linha">
+                    <div class="peca_promocao {{if .IsWhitePlayer}}branca{{else}}preta{{end}}" id="KNIGHT">
+                        <div class="back_blur"></div>
+                        <div class="codigo_peca">&#9822;</div>
+                        <div class="nome_peca">Cavalo</div>
+                    </div>
+                    <div class="peca_promocao {{if .IsWhitePlayer}}branca{{else}}preta{{end}}" id="BISHOP">
+                        <div class="back_blur"></div>
+                        <div class="codigo_peca">&#9821;</div>
+                        <div class="nome_peca">Bispo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="chess-board">
+            <tbody>
+            <tr>
+                <th class="numero_linha"></th>
+                <th>a</th><th>b</th><th>c</th><th>d</th>
+                <th>e</th><th>f</th><th>g</th><th>h</th>
+            </tr>
+            {{range .BoardRows}}
+            <tr>
+                <th class="numero_linha">{{.Rank}}</th>
+                {{range .Cells}}
+                <td class="{{.Class}}" id="{{.ID}}">{{.PieceHTML}}</td>
+                {{end}}
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Personal area / game controls -->
+    <div class="bloco_pessoal">
+        <div class="back_blur"></div>
+        {{if and .IsFinished .WinnerName}}
+        <h3 class="id_area_pessoal">Rever Partida</h3>
+        <div class="descricao_dados_jogo">Vencedor</div>
+        <div class="descricao_dados_principais_jogo">{{.WinnerName}}</div>
+        <div class="caixa_cor_pecas_vencedor {{if .WinnerIsWhite}}branco{{else}}preto{{end}}"></div>
+        <div class="descricao_dados_vencedor">{{.EndDesc}}</div>
+        <div class="descricao_dados_jogo">Tempo da Partida</div>
+        <div class="zona_timer">
+            <div class="bloco_timer">
+                <div class="timer_dia"><div class="timer_number" id="totalDia0">0</div><div class="timer_number" id="totalDia1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_hora"><div class="timer_number" id="totalHora0">0</div><div class="timer_number" id="totalHora1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_min"><div class="timer_number" id="totalMinuto0">0</div><div class="timer_number" id="totalMinuto1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_seg"><div class="timer_number" id="totalSegundo0">0</div><div class="timer_number" id="totalSegundo1">0</div></div>
+            </div>
+            <div class="timer_descricao">
+                <div class="timer_desc">Dias</div><div class="timer_sep"></div>
+                <div class="timer_desc">Horas</div><div class="timer_sep"></div>
+                <div class="timer_desc">Minutos</div><div class="timer_sep"></div>
+                <div class="timer_desc">Segundos</div>
+            </div>
+        </div>
+        <div class="descricao_dados_jogo">Jogadas totais</div>
+        <div class="descricao_dados_principais_jogo">{{.MoveCount}}</div>
+        {{else if and .IsFinished .IsDraw}}
+        <h3 class="id_area_pessoal">Rever Partida</h3>
+        <div class="descricao_dados_jogo">Empate</div>
+        <div class="descricao_dados_principais_jogo"></div>
+        <div class="descricao_dados_vencedor">{{.EndDesc}}</div>
+        <div class="descricao_dados_jogo">Tempo da Partida</div>
+        <div class="zona_timer">
+            <div class="bloco_timer">
+                <div class="timer_dia"><div class="timer_number" id="totalDia0">0</div><div class="timer_number" id="totalDia1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_hora"><div class="timer_number" id="totalHora0">0</div><div class="timer_number" id="totalHora1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_min"><div class="timer_number" id="totalMinuto0">0</div><div class="timer_number" id="totalMinuto1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_seg"><div class="timer_number" id="totalSegundo0">0</div><div class="timer_number" id="totalSegundo1">0</div></div>
+            </div>
+            <div class="timer_descricao">
+                <div class="timer_desc">Dias</div><div class="timer_sep"></div>
+                <div class="timer_desc">Horas</div><div class="timer_sep"></div>
+                <div class="timer_desc">Minutos</div><div class="timer_sep"></div>
+                <div class="timer_desc">Segundos</div>
+            </div>
+        </div>
+        <div class="descricao_dados_jogo">Jogadas totais</div>
+        <div class="descricao_dados_principais_jogo">{{.MoveCount}}</div>
+        {{else}}
+        <h3 class="id_area_pessoal">Area Pessoal</h3>
+        <div class="tempo_jogada">Tempo da jogada</div>
+        <div class="zona_timer">
+            <div class="bloco_timer">
+                <div class="timer_dia"><div class="timer_number" id="dia0">0</div><div class="timer_number" id="dia1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_hora"><div class="timer_number" id="hora0">0</div><div class="timer_number" id="hora1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_min"><div class="timer_number" id="minuto0">0</div><div class="timer_number" id="minuto1">0</div></div>
+                <div class="timer_sep">:</div>
+                <div class="timer_seg"><div class="timer_number" id="segundo0">0</div><div class="timer_number" id="segundo1">0</div></div>
+            </div>
+            <div class="timer_descricao">
+                <div class="timer_desc">Dias</div><div class="timer_sep"></div>
+                <div class="timer_desc">Horas</div><div class="timer_sep"></div>
+                <div class="timer_desc">Minutos</div><div class="timer_sep"></div>
+                <div class="timer_desc">Segundos</div>
+            </div>
+        </div>
+        {{end}}
+
+        {{if .IsMyTurn}}
+        <!-- My turn: move form + resign/draw buttons -->
+        <form id="formsMove" action="/Game?Id={{.GameID}}" method="POST">
+            <h3 class="id_jogada">Introduzir jogada</h3>
+            <div class="bloco_input">
+                <input type="text" class="input_pesquisa" id="move" name="move" placeholder="a1 b1" maxlength="12">
+                <input type="text" class="input_invisivel" id="tempo" name="tempoMove">
+            </div>
+            <h4 class="id_info_jogada">Introduz as posições ou clica no tabuleiro para mover a peça</h4>
+            <button type="submit" class="btn jogar">Introduzir jogada</button>
+        </form>
+        <div class="btn_options_lado">
+            <form id="formsDesistir" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="desistir" value="desistir">
+                <button type="submit" class="btn_lado_lado terminar">Desistir</button>
+            </form>
+            <form id="formsPedirEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="pedirEmpate" value="pedirEmpate">
+                {{if .TieOfferByMe}}
+                <button type="submit" class="btn_lado_lado empatar disable" disabled>Pedir empate</button>
+                {{else}}
+                <button type="submit" class="btn_lado_lado empatar">Pedir empate</button>
+                {{end}}
+            </form>
+        </div>
+        {{if .TieOfferByOpponent}}
+        <h3 class="id_decidir_empate">O adversário pediu empate. Pretende aceitar empate?</h3>
+        <div class="zona_decidir_empate">
+            <form id="formsAceitarEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="aceitarEmpate" value="aceitarEmpate">
+                <button type="submit" class="btn_aceitar_empate">&#10003;</button>
+            </form>
+            <form id="formsRecusarEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="recusarEmpate" value="recusarEmpate">
+                <button type="submit" class="btn_recusar_empate">&#10007;</button>
+            </form>
+        </div>
+        {{end}}
+        <div class="fixar_rever">
+            <h3 class="id_rever">Rever jogadas</h3>
+            <div class="zona_btn_rever">
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{.MoveIndex}}">
+                    <button class="seta_dir {{if eq .MoveIndex 0}}disabled_seta{{end}}" {{if eq .MoveIndex 0}}disabled{{end}}>&#8592;</button>
+                </a>
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{add .MoveIndex 2}}">
+                    <button class="seta_esq {{if not .ReplayMode}}disabled_seta{{end}}" {{if not .ReplayMode}}disabled{{end}}>&#8594;</button>
+                </a>
+            </div>
+            <h4 class="id_info_rever">Revê as jogadas realizadas pelos jogadores deste jogo</h4>
+        </div>
+
+        {{else if and .IsParticipant (not .IsFinished) (not .ReplayMode)}}
+        <!-- Participant waiting: resign/draw options -->
+        <div class="btn_options_lado">
+            <form id="formsDesistir" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="desistir" value="desistir">
+                <button type="submit" class="btn_lado_lado terminar">Desistir</button>
+            </form>
+            <form id="formsPedirEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="pedirEmpate" value="pedirEmpate">
+                {{if .TieOfferByMe}}
+                <button type="submit" class="btn_lado_lado empatar disable" disabled>Pedir empate</button>
+                {{else}}
+                <button type="submit" class="btn_lado_lado empatar">Pedir empate</button>
+                {{end}}
+            </form>
+        </div>
+        {{if .TieOfferByOpponent}}
+        <h3 class="id_decidir_empate">O adversário pediu empate. Pretende aceitar empate?</h3>
+        <div class="zona_decidir_empate">
+            <form id="formsAceitarEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="aceitarEmpate" value="aceitarEmpate">
+                <button type="submit" class="btn_aceitar_empate">&#10003;</button>
+            </form>
+            <form id="formsRecusarEmpate" action="/Game?Id={{.GameID}}" method="POST">
+                <input type="text" class="input_invisivel" name="recusarEmpate" value="recusarEmpate">
+                <button type="submit" class="btn_recusar_empate">&#10007;</button>
+            </form>
+        </div>
+        {{end}}
+        <div class="fixar_rever">
+            <h3 class="id_rever">Rever jogadas</h3>
+            <div class="zona_btn_rever">
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{.MoveIndex}}">
+                    <button class="seta_dir {{if eq .MoveIndex 0}}disabled_seta{{end}}" {{if eq .MoveIndex 0}}disabled{{end}}>&#8592;</button>
+                </a>
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{add .MoveIndex 2}}">
+                    <button class="seta_esq {{if not .ReplayMode}}disabled_seta{{end}}" {{if not .ReplayMode}}disabled{{end}}>&#8594;</button>
+                </a>
+            </div>
+            <h4 class="id_info_rever">Revê as jogadas realizadas pelos jogadores deste jogo</h4>
+        </div>
+
+        {{else}}
+        <!-- Replay mode or spectator -->
+        <div class="fixar_rever_in_game">
+            {{if .ReplayMode}}
+            <div class="sair_replay">
+                <div class="descricao_replay">Estás em modo replay. Clica para poderes jogar ou voltar à jogada atual</div>
+                <a class="btn_voltar_jogada_atual" href="/Game?Id={{.GameID}}">Voltar à jogada atual</a>
+                <div class="numero_da_jogada">Jogada - <span>{{add .MoveIndex 1}}</span></div>
+            </div>
+            {{end}}
+            <h3 class="id_rever_in_game">Rever jogadas</h3>
+            <div class="zona_btn_rever">
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{.MoveIndex}}">
+                    <button class="seta_dir {{if eq .MoveIndex 0}}disabled_seta{{end}}" {{if eq .MoveIndex 0}}disabled{{end}}>&#8592;</button>
+                </a>
+                <a href="/Game?Id={{.GameID}}&MoveNumber={{add .MoveIndex 2}}">
+                    <button class="seta_esq {{if not .ReplayMode}}disabled_seta{{end}}" {{if not .ReplayMode}}disabled{{end}}>&#8594;</button>
+                </a>
+            </div>
+            <h4 class="id_info_rever">Revê as jogadas realizadas pelos jogadores deste jogo</h4>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+<button type="button" id="flipBoard">Rodar Tabuleiro</button>
+<script src="/static/scripts/game.js"></script>
+<script src="/static/scripts/count.js"></script>
+<script>
+    counterBlackDisplay({{.BlackPlayerTime}});
+    counterWhiteDisplay({{.WhitePlayerTime}});
+
+    {{if not .IsWhitePlayer}}blackView(); corPlayer = 'preto';{{else}}corPlayer = 'branco';{{end}}
+
+    {{if and .OpenDateMS (not .IsFinished)}}
+    counterDisplay({{.OpenDateMS}});
+    {{else if .IsFinished}}
+    counterTotalDisplay({{.BlackPlayerTime}}, {{.WhitePlayerTime}});
+    {{end}}
+
+    {{if .ShowVitoria}}ativar_vitoria();{{end}}
+    {{if .ShowDerrota}}ativar_derrota();{{end}}
+    {{if .ShowEmpate}}ativar_empate();{{end}}
+
+    // SSE for real-time board updates
+    (function() {
+        var es = new EventSource('/events?gameId={{.GameID}}');
+        es.onmessage = function() {
+            window.location.href = window.location.href;
+        };
+    })();
+
+    {{if .IsMyTurn}}
+    function previewJogadas(square) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                adicionarPossibles(this.responseText);
+            }
+        };
+        xhttp.open("GET", "/ajax?gameId={{.GameID}}&square=" + square, true);
+        xhttp.send();
+    }
+    {{end}}
+
+    {{if .IsMyTurn}}interatividadeTabuleiro();{{end}}
+</script>
+</body>
+</html>
+{{end}}
