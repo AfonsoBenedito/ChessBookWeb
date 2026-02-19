@@ -4,12 +4,23 @@ import (
 	"chessbookweb/db"
 	"net/http"
 	"strconv"
+	"time"
 )
+
+type gameDisplay struct {
+	ID                 int64
+	Date               string
+	WhitePlayer        string
+	BlackPlayer        string
+	Finished           bool
+	Winner             string
+	EndGameDescription string
+}
 
 type adminData struct {
 	Session *Session
 	Players []db.Player
-	Games   []db.Game
+	Games   []gameDisplay
 	Error   string
 }
 
@@ -49,11 +60,38 @@ func ManageDB(w http.ResponseWriter, r *http.Request) {
 		data.Players = players
 	}
 
+	// Build player name lookup map
+	nameMap := make(map[int64]string, len(players))
+	for _, p := range players {
+		nameMap[p.ID] = p.Name
+	}
+
 	games, err := db.ListAllGames()
 	if err != nil {
 		data.Error = "Error loading games: " + err.Error()
 	} else {
-		data.Games = games
+		displays := make([]gameDisplay, 0, len(games))
+		for _, g := range games {
+			d := gameDisplay{
+				ID:          g.ID,
+				WhitePlayer: nameMap[g.WhitePlayerID],
+				BlackPlayer: nameMap[g.BlackPlayerID],
+				Finished:    g.Finished,
+			}
+			if g.DateMS != 0 {
+				d.Date = time.UnixMilli(g.DateMS).Format("02/01/2006")
+			}
+			if g.WinnerPlayerID != nil {
+				d.Winner = nameMap[*g.WinnerPlayerID]
+			} else {
+				d.Winner = "—"
+			}
+			if g.EndGameDescription != nil {
+				d.EndGameDescription = *g.EndGameDescription
+			}
+			displays = append(displays, d)
+		}
+		data.Games = displays
 	}
 
 	renderTemplate(w, "manager.html", data)

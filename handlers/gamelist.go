@@ -29,12 +29,11 @@ type PlayerOption struct {
 }
 
 type gameListData struct {
-	Name           string
-	Email          string
-	Interatividade bool
-	Unfinished     []GameSummary
-	Finished       []GameSummary
-	Players        []PlayerOption
+	Name       string
+	Email      string
+	Unfinished []GameSummary
+	Finished   []GameSummary
+	Players    []PlayerOption
 }
 
 // GameList handles GET/POST /GameList
@@ -46,15 +45,6 @@ func GameList(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodPost {
 		r.ParseForm()
-
-		// Handle interativity toggle
-		if r.FormValue("formsInter") != "" {
-			inter := r.FormValue("boxInteratividade") != ""
-			sess.Interatividade = inter
-			SetSession(w, sess)
-			http.Redirect(w, r, "/GameList", http.StatusSeeOther)
-			return
-		}
 
 		// Handle new game
 		startGameEmail := r.FormValue("startGameEmail")
@@ -172,12 +162,11 @@ func GameList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := gameListData{
-		Name:           sess.Name,
-		Email:          sess.Email,
-		Interatividade: sess.Interatividade,
-		Unfinished:     unfinished,
-		Finished:       finished,
-		Players:        playerOptions,
+		Name:       sess.Name,
+		Email:      sess.Email,
+		Unfinished: unfinished,
+		Finished:   finished,
+		Players:    playerOptions,
 	}
 	renderTemplate(w, "gameList.html", data)
 }

@@ -53,10 +53,9 @@ func Registo(w http.ResponseWriter, r *http.Request) {
 				data.ShowLogin = true
 			} else {
 				sess := &Session{
-					Name:           player.Name,
-					Email:          player.Email,
-					PlayerID:       player.ID,
-					Interatividade: false,
+					Name:     player.Name,
+					Email:    player.Email,
+					PlayerID: player.ID,
 				}
 				if err := SetSession(w, sess); err != nil {
 					http.Error(w, "session error", http.StatusInternalServerError)

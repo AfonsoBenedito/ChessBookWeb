@@ -58,7 +58,6 @@ type gamePageData struct {
 	BlackPlayerTime    int
 	WhitePlayerTime    int
 	OpenDateMS         int64 // 0 if not applicable
-	Interatividade     bool
 	IsWhitePlayer      bool
 	ShowVitoria        bool
 	ShowDerrota        bool
@@ -407,7 +406,6 @@ func Game(w http.ResponseWriter, r *http.Request) {
 		BlackPlayerTime:    blackTime,
 		WhitePlayerTime:    whiteTime,
 		OpenDateMS:         openDateMS,
-		Interatividade:     sess.Interatividade,
 		IsWhitePlayer:      isWhitePlayer,
 		ShowVitoria:        showVitoria,
 		ShowDerrota:        showDerrota,

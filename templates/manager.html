@@ -55,16 +55,16 @@
             <div class="linha_table">
                 <div class="arg_btn"><div class="arg_btn_expandir">&#8250;</div></div>
                 <div class="arg_id">{{.ID}}</div>
-                <div class="arg_meio">{{.DateMS}}</div>
-                <div class="arg_meio">{{.WhitePlayerID}}</div>
-                <div class="arg_meio">{{.BlackPlayerID}}</div>
+                <div class="arg_meio">{{.Date}}</div>
+                <div class="arg_meio">{{.WhitePlayer}}</div>
+                <div class="arg_meio">{{.BlackPlayer}}</div>
                 <div class="arg_meio">{{if .Finished}}Terminado{{else}}A Decorrer{{end}}</div>
-                <div class="arg_meio">{{if .WinnerPlayerID}}{{.WinnerPlayerID}}{{else}}—{{end}}</div>
-                <div class="arg_meio">{{if .EndGameDescription}}{{deref .EndGameDescription}}{{end}}</div>
+                <div class="arg_meio">{{.Winner}}</div>
+                <div class="arg_meio">{{.EndGameDescription}}</div>
                 <div class="arg_eliminar">
                     <form method="POST" action="/ManageDB">
                         <input type="hidden" name="deleteGame" value="{{.ID}}">
-                        <div class="arg_btn_eliminar" id="jogo{{.ID}}" onclick="this.closest('form').submit()"></div>
+                        <div class="arg_btn_eliminar" id="jogo{{.ID}}" onclick="this.closest('form').submit()">&#215;</div>
                     </form>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 <div class="arg_eliminar_jogador">
                     <form method="POST" action="/ManageDB">
                         <input type="hidden" name="deletePlayer" value="{{.ID}}">
-                        <div class="arg_btn_eliminar_jogador" id="jogador{{.ID}}" onclick="this.closest('form').submit()"></div>
+                        <div class="arg_btn_eliminar_jogador" id="jogador{{.ID}}" onclick="this.closest('form').submit()">&#215;</div>
                     </form>
                 </div>
             </div>

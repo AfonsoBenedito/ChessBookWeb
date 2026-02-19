@@ -20,11 +20,18 @@ start: build
 
 ## Run with Docker Compose (background, use 'make docker-down' to stop)
 docker-up:
-	docker compose -f docker-compose.cloud-run.yml up --build
+	docker compose up --build
 
 ## Stop and remove Docker Compose containers
 docker-down:
-	docker compose -f docker-compose.cloud-run.yml down
+	docker compose down
+
+## Populate the DB with mock players and games (run after 'make run' has created the DB)
+seed:
+	DB_PATH=$(DB_PATH) go run ./cmd/seed
+
+## Wipe the DB and re-seed in one step
+reseed: clean seed
 
 ## Remove built binary and local DB
 clean:

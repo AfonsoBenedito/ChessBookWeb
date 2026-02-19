@@ -15,10 +15,9 @@ const sessionCookieName = "chesssession"
 
 // Session holds the authenticated player data
 type Session struct {
-	Name           string `json:"name"`
-	Email          string `json:"email"`
-	PlayerID       int64  `json:"player_id"`
-	Interatividade bool   `json:"interatividade"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	PlayerID int64  `json:"player_id"`
 }
 
 var sessionSecret []byte

@@ -457,7 +457,6 @@
     {{if .ShowDerrota}}ativar_derrota();{{end}}
     {{if .ShowEmpate}}ativar_empate();{{end}}
 
-    {{if .Interatividade}}
     // SSE for real-time board updates
     (function() {
         var es = new EventSource('/events?gameId={{.GameID}}');
@@ -465,9 +464,8 @@
             window.location.href = window.location.href;
         };
     })();
-    {{end}}
 
-    {{if and .IsMyTurn .Interatividade}}
+    {{if .IsMyTurn}}
     function previewJogadas(square) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
