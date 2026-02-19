@@ -6,12 +6,12 @@ spec:
   template:
     spec:
       containers:
-        - image: gcr.io/YOUR_PROJECT/chessbookweb
+        - image: europe-southwest1-docker.pkg.dev/afonso-benedito/chessbookweb/chessbookweb:latest
           env:
             - name: DB_PATH
               value: /tmp/chess.db
             - name: SESSION_SECRET
-              value: REPLACE_WITH_RANDOM_SECRET
+              value: REPLACE_WITH_SECRET
           resources:
             limits:
               memory: 256Mi
